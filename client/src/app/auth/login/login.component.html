@@ -4,23 +4,51 @@
       <img src="assets/images/logo.webp" alt="Logo" class="mb-3" width="80">
       <h3>Login</h3>
     </div>
-    <form (ngSubmit)="onSubmit()">
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" placeholder="Enter your email" required>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter your email">
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-danger">
+          <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
+          <small *ngIf="loginForm.get('email')?.hasError('email')">Enter a valid email address.</small>
+        </div>
       </div>
+
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" placeholder="Enter your password" required>
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="Enter your password">
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger">
+          <small *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</small>
+          <small *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters.</small>
+        </div>
       </div>
+
       <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe">
         <label class="form-check-label" for="rememberMe">Remember me</label>
       </div>
-      <button type="submit" class="btn btn-primary w-100">Login</button>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
     </form>
+
     <div class="mt-3 text-center">
       <a href="#">Forgot password?</a>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Modal for Messages -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" [ngClass]="{ 'bg-danger': isError, 'bg-success': !isError }">
+        <h5 class="modal-title">{{ isError ? 'Error' : 'Success' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
     </div>
   </div>
 </div>

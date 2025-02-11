@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #000957;
+    --secondary-color: #FFEB00;
+    --accent-color: #577BC1;
+    --background-color: #F5F7FA;
+    --text-color: #333;
+    --hover-color: #0056b3;
+    --white: #FFFFFF;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

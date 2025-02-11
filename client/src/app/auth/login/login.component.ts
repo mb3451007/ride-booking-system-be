@@ -1,43 +1,67 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http'; // Import HttpClient
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
+  standalone: true, // Standalone component
+  imports: [CommonModule, ReactiveFormsModule],
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  loginForm: FormGroup;
+  message: string = ''; // Message for both success & error
+  isError: boolean = false; // Differentiate success/error messages
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false],
+    });
+  }
 
   onSubmit() {
-    const loginData = {
-      email: this.email,
-      password: this.password,
+    if (this.loginForm.invalid) return;
+
+    const credentials = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
     };
 
-    // Send login data to the backend API
-    this.http.post(`${environment.apiBaseUrl}/api/login`, loginData).subscribe(
+    this.authService.login(credentials).subscribe(
       (response: any) => {
         if (response.success) {
-          // If the login is successful, redirect or perform other actions
-          console.log('User logged in successfully', response);
+          localStorage.setItem('authToken', response.token);
+          this.showMessage('Login successful! Redirecting...', false);
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 2000); // Delay for a better user experience
         } else {
-          // Handle error if user does not exist or credentials are incorrect
-          console.log('Login failed', response.message);
+          this.showMessage('Incorrect email or password. Please try again.', true);
         }
       },
       (error) => {
-        console.error('Error logging in', error);
+        this.showMessage('Incorrect email or password. Please try again.', true);
       }
     );
+  }
+
+  showMessage(message: string, isError: boolean) {
+    this.message = message;
+    this.isError = isError;
+    const modalElement = document.getElementById('messageModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }
