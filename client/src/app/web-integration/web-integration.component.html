@@ -1,0 +1,51 @@
+<div class="inner-dashboard-container">
+    <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+    
+      <!-- Discount Form (Modal) -->
+      <div class="w-100 bg-gray-900 bg-opacity-50">
+        <h2 class="text-xl header-title p-4 font-weight-bold mb-4 text-center">Add Discount Code</h2>
+        <div class="bg-white w-50 p-6 rounded-lg shadow-md max-w-lg w-full relative">
+          <form [formGroup]="newDiscountForm" (ngSubmit)="addDiscount()">
+            <div class="mb-4">
+              <label class="form-label">Starting Address</label>
+              <input formControlName="startingAddress" type="text" class="form-control" placeholder="Enter starting address" required>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Arrival Address</label>
+              <input formControlName="arrivalAddress" type="text" class="form-control" placeholder="Enter arrival address" required>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Date & Time</label>
+              <input formControlName="dateTime" type="datetime-local" class="form-control" required>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Baby Seat</label>
+              <input formControlName="babySeat" type="checkbox" class="form-check-input">
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Water Bottle</label>
+              <input formControlName="waterBottle" type="checkbox" class="form-check-input">
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Trip Type</label>
+              <select formControlName="tripType" class="form-select" required>
+                <option value="one-way">One Way</option>
+                <option value="return">Return Trip</option>
+              </select>
+            </div>
+            <button type="submit" class="btn custom-btn w-50" [disabled]="newDiscountForm.invalid">
+              Calculate Price
+            </button>
+          </form>
+          
+          <!-- Map Section -->
+          <div class="mt-6">
+            <div id="map" class="w-full h-64 bg-gray-200">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.7430773077313!2d72.8226087747262!3d33.76730443272387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfa4379f98c421%3A0x689151ad40e0a54b!2sUET%2C%20UET%20Football%20Ground%2C%20University%20of%20Engineering%20%26%20Technology%2C%20Taxila%2C%2047080%2C%20Pakistan!5e0!3m2!1sen!2s!4v1739801300115!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

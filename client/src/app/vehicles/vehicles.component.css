@@ -1,0 +1,76 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #000957;
+    --secondary-color: #FFEB00;
+    --accent-color: #577BC1;
+    --background-color: #F5F7FA;
+    --text-color: #333;
+    --hover-color: #0056b3;
+    --white: #FFFFFF;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+}
+
+.inner-dashboard-container {
+    padding: 40px;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    background-color: var(--secondary-color);
+    box-shadow: var(--shadow); /* Add shadow to top nav */
+}
+
+/* Custom Header Styling */
+.header-title {
+    display: flex;
+    align-items: center;
+    background-color: var(--secondary-color); /* You can replace with any color or CSS variable */
+    color: var(--primary-color); /* Ensures text is visible on dark background */
+    font-weight: bold;
+    font-size: 1.25rem;
+    border-radius: 8px 8px 0 0; /* Rounded corners on top */
+    box-shadow: var(--shadow); /* Shadow effect */
+    margin-bottom: 20px; /* Adds spacing between the header and table */
+}
+
+/* Table Customization */
+table {
+    font-size: 1rem;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--secondary-color); /* Light background for headers */
+    font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternating row colors */
+}
+
+/* Row Hover Effect */
+table tbody tr:hover {
+    background-color: #e9ecef; /* Subtle hover effect */
+    cursor: pointer;
+}
+
+/* Styling for table borders */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+table td {
+    font-size: 0.9rem;
+}

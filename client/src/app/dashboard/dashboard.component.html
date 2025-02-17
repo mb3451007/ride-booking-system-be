@@ -6,37 +6,48 @@
         <ul class="nav-links">
             <li class="nav-item">
                 <a class="nav-link" routerLink="booking" routerLinkActive="active">
-                    <i class="fas fa-tachometer-alt"></i>
+                    <i class="fas fa-calendar-check"></i>
                     <span>Bookings</span>
                 </a>
             </li>
+
+            <!-- Settings Dropdown -->
             <li class="nav-item">
-                <a class="nav-link" routerLink="setting" routerLinkActive="active">
-                    <i class="fas fa-users"></i>
-                    <span>Setting</span>
+                <a class="nav-link" data-bs-toggle="collapse" href="#settingsDropdown" role="button" aria-expanded="false" aria-controls="settingsDropdown">
+                    <span class="d-flex justify-content-between">
+                    <i class="fas fa-cogs"></i>
+                    <span>Settings</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
+                    </span>
                 </a>
+                <ul class="collapse nav-submenu" id="settingsDropdown">
+                    <li><a class="nav-link" routerLink="vehicles" routerLinkActive="active"><i class="fas fa-car"></i> Vehicles</a></li>
+                    <li><a class="nav-link" routerLink="packages" routerLinkActive="active"><i class="fas fa-box"></i> Packages</a></li>
+                    <li><a class="nav-link" routerLink="surcharge" routerLinkActive="active"><i class="fas fa-gift"></i>Surcharge</a></li>
+                    <li><a class="nav-link" routerLink="options" routerLinkActive="active"><i class="fas fa-cogs"></i>Options</a></li>
+                    <li><a class="nav-link" routerLink="discounts" routerLinkActive="active"><i class="fas fa-percent"></i> Discounts</a></li>
+                    <li><a class="nav-link" routerLink="web-integration" routerLinkActive="active"><i class="fas fa-plug"></i> Web Integration</a></li>
+                </ul>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" routerLink="contact-support" routerLinkActive="active">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fas fa-headset"></i>
                     <span>Contact Support</span>
                 </a>
             </li>
         </ul>
-        
     </nav>
 
     <div class="main-content">
         <header class="top-nav">
-            <h1 class="page-title">Dashboard</h1>
+            <h1 class="page-title">{{pageTitle}}</h1>
             <div class="profile-dropdown">
                 <button class="profile-btn">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Admin</span>
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-user-circle fs-3"></i>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" routerLink="profile">Profile</a>
                     <a class="dropdown-item" (click)="logout()">Logout</a>
                 </div>
             </div>
@@ -46,4 +57,4 @@
             <router-outlet></router-outlet> <!-- This loads the selected component -->
         </div>
     </div>
-</div> 
+</div>

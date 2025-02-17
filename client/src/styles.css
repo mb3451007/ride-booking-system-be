@@ -9,3 +9,8 @@
     --white: #FFFFFF;
     --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.custom-btn {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}

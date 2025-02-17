@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -42,9 +44,16 @@ export class LoginComponent {
         if (response.success) {
           localStorage.setItem('authToken', response.token);
           this.showMessage('Login successful! Redirecting...', false);
+
+          // Trigger change detection manually
+          this.cdr.detectChanges();
+
           setTimeout(() => {
-            this.router.navigate(['/dashboard']);
-          }, 2000); // Delay for a better user experience
+            this.router.navigate(['/dashboard'])
+            .then(() => {
+              window.location.reload();
+            });    
+          }, 1000);
         } else {
           this.showMessage('Incorrect email or password. Please try again.', true);
         }

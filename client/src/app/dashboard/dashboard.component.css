@@ -54,7 +54,7 @@
 
 header {
     padding: 30px;
-    margin: 5px;
+    margin-bottom: 20px;
 }
 
 .top-nav {
@@ -108,6 +108,7 @@ header {
     padding: 10px;
     text-decoration: none;
     color: var(--text-color);
+    cursor: pointer;
     transition: background-color 0.3s;
 }
 
@@ -115,3 +116,27 @@ header {
     background-color: #f8f9fa;
 }
 
+/* Submenu (Settings Dropdown) */
+.nav-submenu {
+    list-style: none;
+    padding-left: 20px;
+    display: none;
+}
+
+.nav-submenu .nav-link {
+    font-size: 14px;
+}
+
+.nav-submenu .nav-link:hover {
+    background: var(--background-color);
+}
+
+/* Show submenu on collapse */
+.show {
+    display: block !important;
+}
+
+
+.main-content {
+    margin-left: 250px;
+}
