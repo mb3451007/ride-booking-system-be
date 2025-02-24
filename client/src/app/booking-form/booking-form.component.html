@@ -1,4 +1,11 @@
 <div class="container mt-4">
+  <div *ngIf="bookingSuccess" class="alert alert-success" role="alert">
+    Booking Confirmed!
+  </div>
+  
+  <div *ngIf="bookingError" class="alert alert-danger" role="alert">
+    Booking Failed. Try Again.
+  </div>
   <div class="card shadow-lg border-0 mx-auto form-card col-md-9">
     <div class="card-body p-4">
       <h2 class="text-center mb-4 header-title fw-bold text-primary" style="font-size: 2rem;">
@@ -10,6 +17,12 @@
         select your ride, and enjoy the convenience of safe and reliable transportation at your fingertips.
       </p>
       <form [formGroup]="newDiscountForm">
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Full Name</label>
+          <input formControlName="fullName" type="text" class="form-control" placeholder="Enter your full name" required />
+        </div>
+        
         <div class="mb-3">
           <label class="form-label fw-semibold">Starting Address</label>
           <input
@@ -66,7 +79,7 @@
         </div>
 
         <div class="d-flex justify-content-center p-4">
-          <button type="button" class="btn btn-lg custom-btn" (click)="clearMarkers()">Confirm Booking</button>
+          <button type="button" class="btn btn-lg custom-btn" (click)="clearMarkers();submitBooking()">Confirm Booking</button>
         </div>
 
       </form>
@@ -74,30 +87,13 @@
   </div>
 </div>
 
+
+
 <!-- Map Modal -->
 <div id="mapModal" class="map-modal">
   <div class="map-container">
     <button class="close-btn" (click)="closeMap()">✖</button>
     <div id="map" class="map-style"></div>
     <button class="confirm-btn" (click)="confirmLocation()">OK</button>
-  </div>
-</div>
-
-
-<!-- Embeddable Iframe Section -->
-<div class="container mt-4">
-  <div class="card shadow-lg border-0 mx-auto form-card col-md-9">
-    <div class="card-body p-4">
-      <h3 class="text-center mb-4 fw-bold text-primary">Embed This Form</h3>
-      <p class="text-center text-muted">
-        Copy and paste the following iframe code to embed this form on another website:
-      </p>
-      <div class="embed-code bg-light p-3 rounded">
-        <code id="iframeCode">
-          &lt;iframe src="{{ iframeUrl }}" width="100%" height="600" style="border: none;"&gt;&lt;/iframe&gt;
-        </code>
-      </div>
-      <button class="btn custom-btn mt-3" (click)="copyIframeCode()">Copy Code</button>
-    </div>
   </div>
 </div>

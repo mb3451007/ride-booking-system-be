@@ -4,29 +4,29 @@
     </button>
   
     <!-- Surcharge Form -->
-    <div *ngIf="showForm">
+    <div *ngIf="showForm" class="col-md-8">
       <form [formGroup]="surchargeForm" (ngSubmit)="addSurcharge()">
   
         <!-- Surcharge Name -->
-        <div class="mb-3">
+        <div class="mb-3 header-title">
           <label for="name" class="form-label">Surcharge Name</label>
           <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter surcharge name">
         </div>
   
         <!-- Start Time -->
-        <div class="mb-3">
+        <div class="mb-3 header-title">
           <label for="startTime" class="form-label">Start Time</label>
           <input formControlName="startTime" type="time" class="form-control" id="startTime">
         </div>
   
         <!-- End Time -->
-        <div class="mb-3">
+        <div class="mb-3 header-title">
           <label for="endTime" class="form-label">End Time</label>
           <input formControlName="endTime" type="time" class="form-control" id="endTime">
         </div>
   
         <!-- Days Selection -->
-        <div class="mb-3">
+        <div class="mb-3 header-title">
           <label class="form-label">Applicable Days</label>
           <div class="d-flex flex-wrap">
             <div *ngFor="let day of daysOfWeek; let i = index" class="form-check me-3">
@@ -37,13 +37,13 @@
         </div>
   
         <!-- Increase Multiplier -->
-        <div class="mb-3">
+        <div class="mb-3 header-title">
           <label for="increaseMultiplier" class="form-label">Increase Multiplier</label>
           <input formControlName="increaseMultiplier" type="number" class="form-control" id="increaseMultiplier" placeholder="Enter multiplier">
         </div>
   
         <!-- Vehicles -->
-        <div class="mb-3">
+        <div class="mb-3 header-title">
           <label for="vehicles" class="form-label">Applicable Vehicles</label>
           <input formControlName="vehicles" type="text" class="form-control" id="vehicles" placeholder="Enter vehicle types">
         </div>
@@ -59,6 +59,7 @@
       <table class="table table-bordered table-striped mt-3">
         <thead class="table-dark">
           <tr>
+            <th>Index#</th>
             <th>Name</th>
             <th>Start Time</th>
             <th>End Time</th>
@@ -69,7 +70,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let surcharge of surcharges">
+          <tr *ngFor="let surcharge of surcharges;let i = index">
+            <td>{{ i + 1 }}</td>
             <td>{{ surcharge.name }}</td>
             <td>{{ surcharge.startTime }}</td>
             <td>{{ surcharge.endTime }}</td>
@@ -77,7 +79,7 @@
             <td>{{ surcharge.increaseMultiplier }}</td>
             <td>{{ surcharge.vehicles }}</td>
             <td>
-              <button class="btn btn-sm btn-info me-1"><i class="fa fa-eye"></i></button>
+              <button class="btn btn-sm btn-info me-1"><i class="fa fa-ban"></i></button>
               <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
               <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
             </td>

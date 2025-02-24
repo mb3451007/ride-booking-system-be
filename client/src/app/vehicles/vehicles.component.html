@@ -10,62 +10,57 @@
     <div *ngIf="showForm" class="w-100 bg-gray-900 bg-opacity-50">
       <div class="bg-white w-50 p-6 rounded-lg shadow-md max-w-lg w-full relative">
         <form [formGroup]="newVehicleForm" (ngSubmit)="addVehicle()">
-          <!-- Vehicle Id -->
-          <div class="mb-4">
-            <label for="vehicleId" class="form-label">Vehicle ID</label>
-            <input formControlName="vehicleId" type="text" class="form-control" id="vehicleId" placeholder="Enter vehicle ID" required>
-          </div>
-
+  
           <!-- Passenger Space -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="passengerSpace" class="form-label">Passenger Space</label>
-            <input formControlName="passengerSpace" type="number" class="form-control" id="passengerSpace" placeholder="Number of passengers" required>
+            <input formControlName="passengerSpace" class="form-control" id="passengerSpace" placeholder="Number of passengers" required>
           </div>
 
           <!-- Baggage Space -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="baggageSpace" class="form-label">Baggage Space</label>
             <input formControlName="baggageSpace" type="text" class="form-control" id="baggageSpace" placeholder="Enter baggage space" required>
           </div>
 
           <!-- Number Owned -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="numberOwned" class="form-label">Number Owned</label>
-            <input formControlName="numberOwned" type="number" class="form-control" id="numberOwned" placeholder="Enter number of vehicles owned" required>
+            <input formControlName="numberOwned" class="form-control" id="numberOwned" placeholder="Enter number of vehicles owned" required>
           </div>
 
           <!-- Price From -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="priceFrom" class="form-label">Price From</label>
-            <input formControlName="priceFrom" type="text" class="form-control" id="priceFrom" placeholder="Price from" required>
+            <input formControlName="priceFrom" class="form-control" id="priceFrom" placeholder="Price from" required>
           </div>
 
           <!-- Price Per KM -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="pricePerKm" class="form-label">$ / KM</label>
-            <input formControlName="pricePerKm" type="number" class="form-control" id="pricePerKm" placeholder="Price per km" required>
+            <input formControlName="pricePerKm" class="form-control" id="pricePerKm" placeholder="Price per km" required>
           </div>
 
           <!-- Price Per Min -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="pricePerMin" class="form-label">$ / Min</label>
-            <input formControlName="pricePerMin" type="number" class="form-control" id="pricePerMin" placeholder="Price per minute" required>
+            <input formControlName="pricePerMin" class="form-control" id="pricePerMin" placeholder="Price per minute" required>
           </div>
 
           <!-- Price Per Passengers -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="pricePerPassenger" class="form-label">$ / Passengers</label>
-            <input formControlName="pricePerPassenger" type="number" class="form-control" id="pricePerPassenger" placeholder="Price per passenger" required>
+            <input formControlName="pricePerPassenger" class="form-control" id="pricePerPassenger" placeholder="Price per passenger" required>
           </div>
 
           <!-- Minimum Fare -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="minimumFare" class="form-label">Minimum Fare</label>
-            <input formControlName="minimumFare" type="number" class="form-control" id="minimumFare" placeholder="Enter minimum fare" required>
+            <input formControlName="minimumFare" class="form-control" id="minimumFare" placeholder="Enter minimum fare" required>
           </div>
 
           <!-- Active Status -->
-          <div class="mb-4">
+          <div class="mb-4 header-title">
             <label for="isActive" class="form-label">Active?</label>
             <select formControlName="isActive" class="form-select" id="isActive" required>
               <option value="true">Yes</option>
@@ -81,45 +76,49 @@
       </div>
     </div>
 
-    <!-- Vehicle Table (Display vehicles when form is hidden) -->
-    <div *ngIf="!showForm" class="table-responsive">
-      <table class="booking-table table table-striped">
-        <thead>
-          <tr>
-            <th>Vehicle Id</th>
-            <th>Passenger Space</th>
-            <th>Baggage Space</th>
-            <th>Number Owned</th>
-            <th>Price From</th>
-            <th>$ / KM</th>
-            <th>$ / Min</th>
-            <th>$ / Passengers</th>
-            <th>Minimum Fare</th>
-            <th>Active?</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let vehicle of vehicles">
-            <td>{{ vehicle.vehicleId }}</td>
-            <td>{{ vehicle.passengerSpace }}</td>
-            <td>{{ vehicle.baggageSpace }}</td>
-            <td>{{ vehicle.numberOwned }}</td>
-            <td>{{ vehicle.priceFrom }}</td>
-            <td>{{ vehicle.pricePerKm }}</td>
-            <td>{{ vehicle.pricePerMin }}</td>
-            <td>{{ vehicle.pricePerPassenger }}</td>
-            <td>{{ vehicle.minimumFare }}</td>
-            <td><i class="fa" [ngClass]="vehicle.isActive ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i></td>
-            <td>
-              <button class="btn btn-sm btn-info mr-2"><i class="fa fa-eye"></i></button>
-              <button class="btn btn-sm btn-warning mr-2"><i class="fa fa-pencil-alt"></i></button>
-              <button class="btn btn-sm btn-danger"><i class="fa fa-ban"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <!-- Vehicle Table (Display vehicles when form is hidden) -->
+<div *ngIf="!showForm" class="table-responsive">
+  <div style="overflow-x: auto; max-height: 400px;">
+    <table class="booking-table table table-striped w-100">
+      <thead>
+        <tr>
+          <th style="min-width: 50px; white-space: nowrap;">#Index</th>
+          <th style="min-width: 150px; white-space: nowrap;">Passenger Space</th>
+          <th style="min-width: 150px; white-space: nowrap;">Baggage Space</th>
+          <th style="min-width: 150px; white-space: nowrap;">Number Owned</th>
+          <th style="min-width: 150px; white-space: nowrap;">Price From</th>
+          <th style="min-width: 150px; white-space: nowrap;">$ / KM</th>
+          <th style="min-width: 150px; white-space: nowrap;">$ / Min</th>
+          <th style="min-width: 150px; white-space: nowrap;">$ / Passengers</th>
+          <th style="min-width: 150px; white-space: nowrap;">Minimum Fare</th>
+          <th style="min-width: 100px; white-space: nowrap;">Active?</th>
+          <th style="min-width: 150px; white-space: nowrap;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle of vehicles; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ vehicle.passengerSpace }}</td>
+          <td>{{ vehicle.baggageSpace }}</td>
+          <td>{{ vehicle.numberOwned }}</td>
+          <td>{{ vehicle.priceFrom }}</td>
+          <td>{{ vehicle.pricePerKm }}</td>
+          <td>{{ vehicle.pricePerMin }}</td>
+          <td>{{ vehicle.pricePerPassenger }}</td>
+          <td>{{ vehicle.minimumFare }}</td>
+          <td>
+            <i class="fa" [ngClass]="vehicle.isActive ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-info me-1"><i class="fa fa-eye"></i></button>
+            <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
+            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+</div>
 
   </div>
 </div>

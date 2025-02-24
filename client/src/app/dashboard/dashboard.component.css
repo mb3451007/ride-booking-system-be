@@ -1,14 +1,14 @@
 
 .sidebar {
     width: 250px;
-    background-color: var(--secondary-color); /* Use primary color for sidebar */
+    background-color: var(--secondary-color);
     padding-top: 30px;
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
     overflow-y: auto;
-    color: var(--primary-color); /* White text on sidebar */
+    color: var(--primary-color);
 }
 
 .logo-container {

@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import Map from 'ol/Map';
@@ -11,17 +12,17 @@ import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import { Style, Icon } from 'ol/style';
 import { CommonModule } from '@angular/common';
+import { BookingsService } from '../services/bookings.service';
 
 @Component({
-  selector: 'app-web-integration',
-  templateUrl: './web-integration.component.html',
-  styleUrls: ['./web-integration.component.css'],
-  imports: [ReactiveFormsModule],
+  selector: 'app-booking-form',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './booking-form.component.html',
+  styleUrl: './booking-form.component.css'
 })
-export class WebIntegrationComponent implements AfterViewInit, OnInit {
 
-  driverId: string | null = null;
-  iframeUrl: string = ''; 
+export class BookingFormComponent implements AfterViewInit, OnInit {
+  driverId: string | null = null; // Variable to store the driver ID
 
   @ViewChild('mapContainer') mapContainer!: ElementRef;
 
@@ -35,31 +36,27 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
   selectedCoordinates: { lat: number; lon: number } | null = null;
   selectedLocationName: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private bookingService: BookingsService) {
     this.newDiscountForm = this.fb.group({
+      fullName: [''], // Add full name field
       startingAddress: [''],
       arrivalAddress: [''],
       date: [''],
       time: [''],
       vehicleType: ['sedan'], // Default vehicle type
       tripType: ['one-way'],
+      driverId: [this.driverId] // Include driver ID
     });
   }
 
   ngOnInit(): void {
-    
-    const currentDomain = window.location.origin; // Get the current domain
-    const driversId = localStorage.getItem('drivers_id');
-
-    if (driversId) {
-      // Construct the iframe URL
-      this.iframeUrl = `${currentDomain}/booking-form?id=${driversId}`;
-    } else {
-      console.error('drivers_id not found in localStorage');
-    }
+    this.route.queryParams.subscribe(params => {
+      this.driverId = params['id'] || null;
+      console.log('Driver ID:', this.driverId);
+    });
   }
 
-  ngAfterViewInit(): void {}
+ngAfterViewInit(): void {}
 
   openMap(field: 'startingAddress' | 'arrivalAddress'): void {
     this.currentField = field;
@@ -168,7 +165,7 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
   }
 
   // Method to copy iframe code to clipboard
-
+  
   copyIframeCode(): void {
     const iframeCode = document.getElementById('iframeCode')!.innerText;
     navigator.clipboard.writeText(iframeCode)
@@ -179,6 +176,43 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
         console.error('Failed to copy iframe code:', err);
         alert('Failed to copy iframe code. Please try again.');
       });
+  }
+
+    bookingSuccess = false;
+    bookingError = false;
+  
+    submitBooking(): void {
+      if (this.newDiscountForm.valid) {
+        const formData = { ...this.newDiscountForm.value, driverId: this.driverId };
+  
+        this.bookingService.bookRide(formData).subscribe(
+          (response) => {
+            console.log('Booking successful:', response);
+            this.bookingSuccess = true;
+            this.bookingError = false;
+            this.clearForm();
+          },
+          (error) => {
+            console.error('Booking failed:', error);
+            this.bookingError = true;
+            this.bookingSuccess = false;
+          }
+        );
+      } else {
+        alert('Please fill all required fields.');
+      }
+    }
+  
+  // Method to clear the form and markers
+  clearForm(): void {
+    this.newDiscountForm.reset({
+      vehicleType: 'sedan', // Reset to default vehicle type
+      tripType: 'one-way', // Reset to default trip type
+    });
+    this.clearMarkers(); // Clear markers from the map
+    this.selectedLocations = []; // Clear selected locations
+    this.selectedCoordinates = null; // Clear selected coordinates
+    this.selectedLocationName = null; // Clear selected location name
   }
 
 }

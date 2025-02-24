@@ -13,15 +13,13 @@ import { Router } from '@angular/router';
   templateUrl: './driver-registration.component.html',
   styleUrls: ['./driver-registration.component.css']
 })
-
 export class DriverRegisterComponent {
-
   step = 1;
   step1Form: FormGroup;
   step2Form: FormGroup;
 
   message: string = '';
-  isError: boolean = false; 
+  isError: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     // Step 1 Form
@@ -31,7 +29,7 @@ export class DriverRegisterComponent {
       consent: [false, Validators.requiredTrue]
     });
 
-    // Step 2 Form with enhanced validations
+    // Step 2 Form
     this.step2Form = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -39,41 +37,16 @@ export class DriverRegisterComponent {
       company: [''],
       address: [''],
       subscription: ['monthly', Validators.required],
-      
-      // Card Number (16 digits)
-      cardNumber: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]{16}$') // 16 digits only
-        ]
-      ],
-
-      // Expiration Date (MM/YY format)
-      expirationDate: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^(0[1-9]|1[0-2])\/([0-9]{2})$') // MM/YY format
-        ]
-      ],
-
-      // CVC (3 digits)
-      cvc: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[0-9]{3}$') // 3 digits only
-        ]
-      ],
-
+      cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+      expirationDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/([0-9]{2})$')]],
+      cvc: ['', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
       dataConsent: [false, Validators.requiredTrue],
       terms: [false, Validators.requiredTrue]
     });
   }
 
   nextStep() {
-    this.step1Form.markAllAsTouched(); // Mark all controls as touched
+    this.step1Form.markAllAsTouched();
     if (this.step === 1 && this.step1Form.valid) {
       this.step = 2;
     }
@@ -84,6 +57,8 @@ export class DriverRegisterComponent {
   }
 
   submitForm() {
+    this.step1Form.markAllAsTouched();
+    this.step2Form.markAllAsTouched();
     if (this.step1Form.valid && this.step2Form.valid) {
       const formData = { ...this.step1Form.value, ...this.step2Form.value };
       console.log(formData);
@@ -114,13 +89,13 @@ export class DriverRegisterComponent {
     }
   }
 
-    showMessage(message: string, isError: boolean) {
-      this.message = message;
-      this.isError = isError;
-      const modalElement = document.getElementById('messageModal');
-      if (modalElement) {
-        const modal = new bootstrap.Modal(modalElement);
-        modal.show();
-      }
+  showMessage(message: string, isError: boolean) {
+    this.message = message;
+    this.isError = isError;
+    const modalElement = document.getElementById('messageModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
     }
+  }
 }

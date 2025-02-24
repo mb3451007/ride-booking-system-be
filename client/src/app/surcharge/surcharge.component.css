@@ -20,6 +20,17 @@
     padding: 40px;
 }
 
+.header-title {
+    background-color: var(--secondary-color);
+    box-shadow: var(--shadow); /* Add shadow to top nav */
+    padding: 20px 10px;
+}
+
+.header-title label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
 /* Table Customization */
 table {
     font-size: 1rem;

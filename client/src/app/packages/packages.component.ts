@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PackageService } from '../services/package.service';
 
 @Component({
   selector: 'app-packages',
@@ -10,56 +11,56 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./packages.component.css']
 })
 export class PackagesComponent {
+  
   showPackageForm: boolean = false;
   isEditing: boolean = false;
-  packages = [
-    { id: 1, name: 'Basic Package', vehicle: 'Car', fixedPrice: 100, priceWithSurcharged: 120, way: 'One-way', status: 'Active' },
-    { id: 2, name: 'Premium Package', vehicle: 'SUV', fixedPrice: 200, priceWithSurcharged: 250, way: 'Round-trip', status: 'Disabled' }
-  ];
-
   newPackageForm: FormGroup;
+  packages: any[] = [];
+  drivers_id: string | null = null; // Store drivers_id
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private packageService: PackageService) {
+
+    this.drivers_id = localStorage.getItem('drivers_id'); // Retrieve drivers_id
+    console.log("Driver ID:", this.drivers_id); // Debugging
+
     this.newPackageForm = this.fb.group({
-      id: [null],
       name: ['', Validators.required],
       vehicle: ['', Validators.required],
       fixedPrice: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       priceWithSurcharged: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       way: ['', Validators.required],
-      status: ['Active', Validators.required]
+      status: ['Active', Validators.required],
+      driverId: [this.drivers_id]
     });
+
+    // Ensure drivers_id is updated
+    if (this.drivers_id) {
+      this.newPackageForm.patchValue({ drivers_id: this.drivers_id });
+    }
+
+    this.loadPackages();
   }
 
   togglePackageForm() {
     this.showPackageForm = !this.showPackageForm;
     if (!this.showPackageForm) {
       this.isEditing = false;
-      this.newPackageForm.reset({ status: 'Active' });
+      this.newPackageForm.reset({ status: 'Active', drivers_id: this.drivers_id });
     }
   }
 
-  onSubmit() {
+  addPackage(): void {
     if (this.newPackageForm.valid) {
-      const packageData = this.newPackageForm.value;
-      if (this.isEditing) {
-        const index = this.packages.findIndex(pkg => pkg.id === packageData.id);
-        this.packages[index] = packageData;
-      } else {
-        packageData.id = this.packages.length + 1;
-        this.packages.push(packageData);
-      }
-      this.togglePackageForm();
+      this.packageService.addPackage(this.newPackageForm.value).subscribe(() => {
+        this.newPackageForm.reset({ status: 'Active', drivers_id: this.drivers_id });
+        this.loadPackages();
+      });
     }
   }
 
-  editPackage(pkg: any) {
-    this.isEditing = true;
-    this.newPackageForm.setValue(pkg);
-    this.showPackageForm = true;
-  }
-
-  deletePackage(id: number) {
-    this.packages = this.packages.filter(pkg => pkg.id !== id);
+  loadPackages(): void {
+    this.packageService.getPackages(this.drivers_id).subscribe(data => {
+      this.packages = data;
+    });
   }
 }

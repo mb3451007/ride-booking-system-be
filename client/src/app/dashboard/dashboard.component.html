@@ -24,7 +24,7 @@
                     <li><a class="nav-link" routerLink="vehicles" routerLinkActive="active"><i class="fas fa-car"></i> Vehicles</a></li>
                     <li><a class="nav-link" routerLink="packages" routerLinkActive="active"><i class="fas fa-box"></i> Packages</a></li>
                     <li><a class="nav-link" routerLink="surcharge" routerLinkActive="active"><i class="fas fa-gift"></i>Surcharge</a></li>
-                    <li><a class="nav-link" routerLink="options" routerLinkActive="active"><i class="fas fa-cogs"></i>Options</a></li>
+                    <!-- <li><a class="nav-link" routerLink="options" routerLinkActive="active"><i class="fas fa-cogs"></i>Options</a></li> -->
                     <li><a class="nav-link" routerLink="discounts" routerLinkActive="active"><i class="fas fa-percent"></i> Discounts</a></li>
                     <li><a class="nav-link" routerLink="web-integration" routerLinkActive="active"><i class="fas fa-plug"></i> Web Integration</a></li>
                 </ul>
@@ -43,16 +43,18 @@
         <header class="top-nav">
             <h1 class="page-title">{{pageTitle}}</h1>
             <div class="profile-dropdown">
-                <button class="profile-btn">
+                <!-- Profile Button -->
+                <button class="profile-btn" (click)="toggleDropdown()">
                     <i class="fas fa-user-circle fs-3"></i>
                 </button>
-                <div class="dropdown-menu">
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu" *ngIf="isDropdownOpen">
                     <a class="dropdown-item" routerLink="profile">Profile</a>
                     <a class="dropdown-item" (click)="logout()">Logout</a>
                 </div>
             </div>
         </header>
-
+    
         <div class="component-container">
             <router-outlet></router-outlet> <!-- This loads the selected component -->
         </div>

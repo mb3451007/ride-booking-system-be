@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
@@ -16,7 +16,22 @@ import { filter } from 'rxjs';
 
 export class DashboardComponent implements OnInit {
 
-  pageTitle: string = 'Dashboard'; // Default page title
+  pageTitle: string = 'Dashboard';
+  isDropdownOpen = false; // Track dropdown visibility
+
+  // Toggle dropdown visibility
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Close dropdown when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const dropdownElement = document.querySelector('.profile-dropdown');
+    if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
+      this.isDropdownOpen = false;
+    }
+  }
 
   constructor(
     private authService: AuthService,

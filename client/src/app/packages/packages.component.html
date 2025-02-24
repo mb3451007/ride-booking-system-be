@@ -10,6 +10,7 @@
         <table class="table table-bordered table-striped">
           <thead class="table-light">
             <tr>
+              <th class="p-2">Index#</th>
               <th class="p-2">Name</th>
               <th class="p-2">Vehicle</th>
               <th class="p-2">Fixed Price</th>
@@ -20,7 +21,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let pkg of packages">
+            <tr *ngFor="let pkg of packages;let i = index">
+              <td class="p-2">{{ i + 1 }}</td>
               <td class="p-2">{{ pkg.name }}</td>
               <td class="p-2">{{ pkg.vehicle }}</td>
               <td class="p-2">{{ pkg.fixedPrice }}</td>
@@ -31,9 +33,10 @@
                   {{ pkg.status }}
                 </span>
               </td>
-              <td class="p-2">
-                <button class="btn btn-sm btn-primary" (click)="editPackage(pkg)">Edit</button>
-                <button class="btn btn-sm btn-danger" (click)="deletePackage(pkg.id)">Delete</button>
+              <td>
+                <button class="btn btn-sm btn-info me-1"><i class="fa fa-ban"></i></button>
+                <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
+                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -42,44 +45,41 @@
   
       <!-- Package Form (Modal) -->
       <div *ngIf="showPackageForm" class="w-100 bg-gray-900 bg-opacity-50">
-        <h2 class="text-xl header-title p-4 font-weight-bold mb-4 text-center">
-          {{ isEditing ? 'Edit Package' : 'Add Package' }}
-        </h2>
   
         <div class="bg-white w-50 p-6 rounded-lg shadow-md max-w-lg w-full relative">
-          <form [formGroup]="newPackageForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="newPackageForm" (ngSubmit)="addPackage()">
             <!-- Package Name -->
-            <div class="mb-4">
+            <div class="mb-4 header-title">
               <label for="name" class="form-label">Package Name</label>
               <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter package name" required>
             </div>
   
             <!-- Vehicle -->
-            <div class="mb-4">
+            <div class="mb-4 header-title">
               <label for="vehicle" class="form-label">Vehicle</label>
               <input formControlName="vehicle" type="text" class="form-control" id="vehicle" placeholder="Enter vehicle type" required>
             </div>
   
             <!-- Fixed Price -->
-            <div class="mb-4">
+            <div class="mb-4 header-title">
               <label for="fixedPrice" class="form-label">Fixed Price</label>
               <input formControlName="fixedPrice" type="number" class="form-control" id="fixedPrice" placeholder="Enter fixed price" required>
             </div>
   
             <!-- Price with Surcharged -->
-            <div class="mb-4">
+            <div class="mb-4 header-title">
               <label for="priceWithSurcharged" class="form-label">Price with Surcharged</label>
               <input formControlName="priceWithSurcharged" type="number" class="form-control" id="priceWithSurcharged" placeholder="Enter price with surcharged" required>
             </div>
   
             <!-- Way -->
-            <div class="mb-4">
+            <div class="mb-4 header-title">
               <label for="way" class="form-label">Way</label>
               <input formControlName="way" type="text" class="form-control" id="way" placeholder="Enter way details" required>
             </div>
   
             <!-- Status -->
-            <div class="mb-4">
+            <div class="mb-4 header-title">
               <label for="status" class="form-label">Status</label>
               <select formControlName="status" class="form-select" id="status" required>
                 <option value="Active">Active</option>

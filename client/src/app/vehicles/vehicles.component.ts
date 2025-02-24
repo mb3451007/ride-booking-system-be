@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { VehicleService } from '../services/vehicle.service';
 
 @Component({
   selector: 'app-vehicles',
@@ -9,47 +10,63 @@ import { CommonModule } from '@angular/common';
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.css']
 })
-export class VehiclesComponent {
+
+export class VehiclesComponent implements OnInit {
+
   newVehicleForm!: FormGroup;
-  
   showForm: boolean = false;  // Toggle form visibility
   vehicles: any[] = [];  // Array to store vehicles data
+  driverId: string | null = null; // Variable to store the driver ID
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
-    // Initialize the form group
+    this.driverId = localStorage.getItem('drivers_id'); // Retrieve the driver ID
+    console.log("Driver ID:", this.driverId); // Debugging
+    
+    // Initialize the form with driverId set
     this.newVehicleForm = this.fb.group({
-      vehicleId: ['', Validators.required],
-      passengerSpace: [0, [Validators.required, Validators.min(1)]],
+      passengerSpace: ['', [Validators.required, Validators.min(1)]],
       baggageSpace: ['', Validators.required],
-      numberOwned: [0, [Validators.required, Validators.min(1)]],
+      numberOwned: ['', [Validators.required, Validators.min(1)]],
       priceFrom: ['', Validators.required],
-      pricePerKm: [0, [Validators.required, Validators.min(0)]],
-      pricePerMin: [0, [Validators.required, Validators.min(0)]],
-      pricePerPassenger: [0, [Validators.required, Validators.min(0)]],
-      minimumFare: [0, [Validators.required, Validators.min(0)]],
+      pricePerKm: ['', [Validators.required, Validators.min(0)]],
+      pricePerMin: ['', [Validators.required, Validators.min(0)]],
+      pricePerPassenger: ['', [Validators.required, Validators.min(0)]],
+      minimumFare: ['', [Validators.required, Validators.min(0)]],
+      driverId: [this.driverId], // Ensure driverId is required
       isActive: [true, Validators.required]
     });
+  
+    // Ensure driverId is updated after the form is created
+    if (this.driverId) {
+      this.newVehicleForm.patchValue({ driverId: this.driverId });
+    }
+  
+    this.loadVehicles();
   }
+  
 
   // Toggle form visibility
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
 
-  // Method to add vehicle to the list
   addVehicle(): void {
     if (this.newVehicleForm.valid) {
-      // Create a new vehicle object from form values
-      const newVehicle = this.newVehicleForm.value;
-
-      // Push the new vehicle into the vehicles array
-      this.vehicles.push(newVehicle);
-
-      // Reset the form after adding the vehicle
-      this.newVehicleForm.reset();
-      this.showForm = false; // Hide the form after adding
+      const formData = this.newVehicleForm.value;
+      this.vehicleService.addVehicle(formData).subscribe(() => {
+        this.loadVehicles();
+        this.newVehicleForm.reset();
+        this.showForm = false;
+      });
     }
   }
+  
+  loadVehicles(): void {
+    this.vehicleService.getVehicles(this.driverId).subscribe(data => {
+      this.vehicles = data;
+    });
+  }
+
 }

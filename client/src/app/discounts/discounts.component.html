@@ -10,6 +10,7 @@
     <table class="table table-bordered table-striped">
       <thead class="table-light">
         <tr>
+          <th class="p-2">Index#</th>
           <th class="p-2">Code</th>
           <th class="p-2">Type</th>
           <th class="p-2">Value</th>
@@ -20,12 +21,18 @@
       </thead>
       <tbody>
         <!-- Display dummy data -->
-        <tr *ngFor="let discount of discounts">
+        <tr *ngFor="let discount of discounts; let i = index">
+          <td class="p-2">{{ i + 1 }}</td>
           <td class="p-2">{{ discount.code }}</td>
           <td class="p-2">{{ discount.type }}</td>
           <td class="p-2">{{ discount.value }}</td>
           <td class="p-2">{{ discount.expiry }}</td>
           <td class="p-2">{{ discount.conditions }}</td>
+          <td>
+            <button class="btn btn-sm btn-info me-1"><i class="fa fa-ban"></i></button>
+            <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
+            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+          </td>
         </tr>
       </tbody>
     </table>

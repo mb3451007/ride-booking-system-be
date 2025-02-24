@@ -1,6 +1,3 @@
-.inner-dashboard-container {
-    padding: 40px;
-}
 /* You can add global styles to this file, and also import other style files */
 :root {
     --primary-color: #000957;
@@ -19,27 +16,21 @@
     border: none;
 }
 
+.inner-dashboard-container {
+    padding: 40px;
+}
+
 .header-title {
-    display: flex;
-    align-items: center;
     background-color: var(--secondary-color);
     box-shadow: var(--shadow); /* Add shadow to top nav */
+    padding: 20px 10px;
 }
 
-/* Custom Header Styling */
-.header-title {
-    display: flex;
-    align-items: center;
-    background-color: var(--secondary-color); /* You can replace with any color or CSS variable */
-    color: var(--primary-color); /* Ensures text is visible on dark background */
-    font-weight: bold;
-    font-size: 1.25rem;
-    border-radius: 8px 8px 0 0; /* Rounded corners on top */
-    box-shadow: var(--shadow); /* Shadow effect */
-    margin-bottom: 20px; /* Adds spacing between the header and table */
+.header-title label {
+    font-size: 16px;
+    font-weight: 600;
 }
 
-/* Table Customization */
 table {
     font-size: 1rem;
     border-collapse: collapse;
