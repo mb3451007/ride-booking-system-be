@@ -21,7 +21,12 @@ app.use(express.json());
 
 // Routes
 app.use("/api", require("./routes/authRoutes"));
-app.use("/api", require("./routes/userRoutes"));
+app.use("/api", require("./routes/driverRoutes"));
+app.use("/api", require("./routes/vehicleRoutes"));
+app.use("/api", require("./routes/packageRoutes"));
+app.use("/api", require("./routes/surchargeRoutes"));
+app.use("/api", require("./routes/discountRoutes"));
+app.use("/api", require("./routes/bookingRoutes"));
 
 // Start Server
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));

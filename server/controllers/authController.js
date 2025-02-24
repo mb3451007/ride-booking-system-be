@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const Driver = require("../models/Driver");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -7,23 +7,28 @@ exports.login = async (req, res) => {
   const { email, password, rememberMe } = req.body;
 
   try {
-    // Find user by email
-    const user = await User.findOne({ email });
-    if (!user) {
+    // Find Driver by email
+    const driver = await Driver.findOne({ email });
+    if (!driver) {
       return res.status(400).json({ success: false, message: "Invalid email or password" });
     }
 
     // Compare password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, driver.password);
     if (!isPasswordValid) {
       return res.status(400).json({ success: false, message: "Invalid email or password" });
     }
 
+    const drivers_id = driver._id;
+
+    // Set token expiration based on rememberMe
+    const expiresIn = rememberMe ? "24h" : "1h";
+
     // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ driverId: driver._id }, process.env.JWT_SECRET, { expiresIn });
 
     // Send success response
-    res.json({ success: true, token });
+    res.json({ success: true, token, drivers_id });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ success: false, message: "Server error, please try again later." });
@@ -38,7 +43,7 @@ exports.dashboard = async (req, res) => {
   }
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    res.json({ message: 'Welcome to the dashboard', user: decoded });
+    res.json({ message: 'Welcome to the dashboard', driver: decoded });
   } catch (err) {
     res.status(400).json({ message: 'Invalid token' });
   }
