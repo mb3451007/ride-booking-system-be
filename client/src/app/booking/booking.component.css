@@ -1,105 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
-:root {
-    --primary-color: #000957;
-    --secondary-color: #FFEB00;
-    --accent-color: #577BC1;
-    --background-color: #F5F7FA;
-    --text-color: #333;
-    --hover-color: #0056b3;
-    --white: #FFFFFF;
-    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.custom-btn {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    border: none;
-}
-
 .inner-dashboard-container {
     padding: 40px;
 }
 
-.booking-table {
-    width: 100%;
-    table-layout: auto;
-    overflow-x: auto;
-}
-
+/* Enable horizontal scrolling */
 .table-responsive {
-    overflow-x: auto; /* Enable horizontal scrolling if the table is wider than the viewport */
+    overflow-x: auto;
+    max-width: 100%;
+    border: 1px solid #ddd; /* Optional: border around the scrollable table */
 }
 
-.table-responsive::-webkit-scrollbar {
-    height: 8px; /* Scrollbar height */
+/* Ensure columns take up space as per heading */
+table {
+    font-size: 1rem;
+    border-collapse: collapse;
 }
 
-.table-responsive::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2); /* Color of the scrollbar thumb */
-    border-radius: 10px;
+table th, .action {
+    white-space: nowrap;
 }
 
-.table-responsive::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
+table th, table td {
+    padding: 12px;
+    text-align: left;
 }
 
-th, td {
-    white-space: nowrap; /* Prevent content from breaking into multiple lines */
-    padding: 8px; /* Add some padding */
-}
-
-th {
-    text-align: left; /* Align table headers to the left */
-}
-
-td {
-    text-align: left; /* Align table data to the left */
-}
-
-.btn-sm {
-    padding: 5px 10px; /* Make buttons smaller and consistent */
-    font-size: 12px;
-}
-
-.booking-table th, .booking-table td {
-    border: 1px solid #ddd; /* Add borders for better clarity */
-}
-
-/* Add some visual cue to show there are more rows */
-.table-responsive:after {
-    content: '↓';
-    font-size: 24px;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    color: #777;
-    pointer-events: none;
-}
-
-
-/* ................. */
-
-.preview-container {
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .form-field {
-    margin-bottom: 15px;
-  }
-  
-  .form-field label {
-    display: block;
-    margin-bottom: 5px;
+table th {
+    background-color: var(--secondary-color); /* Light background for headers */
     font-weight: bold;
-  }
-  
-  .form-field input,
-  .form-field textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternating row colors */
+}
+
+/* Row Hover Effect */
+table tbody tr:hover {
+    background-color: #e9ecef; /* Subtle hover effect */
+    cursor: pointer;
+}
+
+/* Styling for table borders */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+table td {
+    font-size: 0.9rem;
+}

@@ -1,6 +1,9 @@
 .inner-dashboard-container {
     padding: 40px;
+    max-height: 400px;
+    overflow: auto;
 }
+
 /* You can add global styles to this file, and also import other style files */
 :root {
     --primary-color: #000957;
@@ -17,13 +20,6 @@
     background-color: var(--secondary-color);
     color: var(--primary-color);
     border: none;
-}
-
-.header-title {
-    display: flex;
-    align-items: center;
-    background-color: var(--secondary-color);
-    box-shadow: var(--shadow); /* Add shadow to top nav */
 }
 
 /* Custom Header Styling */

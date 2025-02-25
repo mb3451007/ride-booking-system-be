@@ -34,9 +34,9 @@
                 </span>
               </td>
               <td>
-                <button class="btn btn-sm btn-info me-1"><i class="fa fa-ban"></i></button>
-                <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
-                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                <button class="btn btn-sm btn-info me-1" (click)="disablePackage(pkg._id)"><i class="fa fa-ban"></i></button>
+                <button class="btn btn-sm btn-warning me-1" (click)="editPackage(pkg._id)"><i class="fa fa-pencil-alt"></i></button>
+                <button class="btn btn-sm btn-danger" (click)="deletePackage(pkg._id)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>

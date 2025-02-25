@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PackageService } from '../services/package.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-packages',
@@ -63,4 +64,51 @@ export class PackagesComponent {
       this.packages = data;
     });
   }
+
+    disablePackage(packageId: string) {
+      this.openConfirmationDialog('Disable Package', 'Are you sure you want to disable this package?')
+        .then((confirmed) => {
+          if (confirmed) {
+            this.packageService.disablePackage(packageId).subscribe(() => {
+              Swal.fire('Disabled!', 'The package has been disabled.', 'warning');
+              this.loadPackages();
+            });
+          }
+        });
+    }
+
+     editPackage(packageId: any) {
+        this.openConfirmationDialog('Edit package', 'Are you sure you want to edit this package?')
+          .then((confirmed) => {
+            if (confirmed) {
+              // Logic to edit package goes here
+              console.log('Editing package:', packageId);
+            }
+          });
+      }
+    
+      deletePackage(packageId: string) {
+        this.openConfirmationDialog('Delete package', 'Are you sure you want to delete this package?')
+          .then((confirmed) => {
+            if (confirmed) {
+              this.packageService.deletePackage(packageId).subscribe(() => {
+                Swal.fire('Deleted!', 'The package has been deleted.', 'success');
+                this.loadPackages();
+              });
+            }
+          });
+      }
+
+    openConfirmationDialog(title: string, message: string): Promise<boolean> {
+      return Swal.fire({
+        title: title,
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      }).then((result) => result.isConfirmed);
+    }
 }

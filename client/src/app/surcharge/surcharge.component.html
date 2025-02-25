@@ -79,9 +79,9 @@
             <td>{{ surcharge.increaseMultiplier }}</td>
             <td>{{ surcharge.vehicles }}</td>
             <td>
-              <button class="btn btn-sm btn-info me-1"><i class="fa fa-ban"></i></button>
-              <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
-              <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+              <button class="btn btn-sm btn-info me-1" (click)="disableSurcharge(surcharge._id)"><i class="fa fa-ban"></i></button>
+              <button class="btn btn-sm btn-warning me-1" (click)="editSurcharge(surcharge._id)"><i class="fa fa-pencil-alt"></i></button>
+              <button class="btn btn-sm btn-danger" (click)="deleteSurcharge(surcharge._id)"><i class="fa fa-trash"></i></button>
             </td>
           </tr>
         </tbody>

@@ -18,4 +18,16 @@ export class BookingsService {
   getBookings(driverId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}?driverId=${driverId}`);
   }
+
+  confirmBooking(bookingId: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/confirm/${bookingId}`, {});
+  }
+
+  deleteBooking(bookingId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${bookingId}`);
+  }
+
+  cancelBooking(bookingId: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/cancel/${bookingId}`, {});
+  }
 }

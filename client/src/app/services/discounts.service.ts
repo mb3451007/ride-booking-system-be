@@ -17,4 +17,18 @@ export class DiscountsService {
   addDiscount(discount: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, discount);
   }
+
+  editDiscount(discountId: string, discount: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/edit/${discountId}`, discount);
+  }
+  
+  deleteDiscount(discountId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/delete/${discountId}`);
+  }
+  
+  disableDiscount(discountId: string): Observable<any> {
+    console.log('Disabling discount with ID:', discountId);
+    return this.http.patch<any>(`${this.apiUrl}/disable/${discountId}`, {});
+  }
+  
 }

@@ -110,9 +110,21 @@
             <i class="fa" [ngClass]="vehicle.isActive ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
           </td>
           <td>
-            <button class="btn btn-sm btn-info me-1"><i class="fa fa-eye"></i></button>
-            <button class="btn btn-sm btn-warning me-1"><i class="fa fa-pencil-alt"></i></button>
-            <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+            <!-- Disable Button -->
+            <button class="btn btn-sm btn-secondary me-1" title="Disable" (click)="disableVehicle(vehicle._id)">
+              <i class="fa fa-ban"></i>
+            </button>
+            
+            <!-- Edit Button -->
+            <button class="btn btn-sm btn-warning me-1" title="Edit" (click)="editVehicle(vehicle._id)">
+                <i class="fa fa-pencil-alt"></i>
+            </button>
+        
+            <!-- Delete Button -->
+            <button class="btn btn-sm btn-danger" title="Delete" (click)="deleteVehicle(vehicle._id)">
+                <i class="fa fa-trash"></i>
+            </button>
+
           </td>
         </tr>
       </tbody>

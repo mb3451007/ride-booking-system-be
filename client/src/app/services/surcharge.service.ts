@@ -20,8 +20,17 @@ export class SurchargeService {
     return this.http.post<any>(this.apiUrl, surcharge);
   }
 
-  // Delete a surcharge
-  deleteSurcharge(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  editSurcharge(surchargeId: string, surcharge: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/edit/${surchargeId}`, surcharge);
   }
+
+  deleteSurcharge(surchargeId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/delete/${surchargeId}`);
+  }
+
+  disableSurcharge(surchargeId: string): Observable<any> {
+    console.log('Disabling surcharge with ID:', surchargeId);
+    return this.http.patch<any>(`${this.apiUrl}/disable/${surchargeId}`, {});
+}
+
 }

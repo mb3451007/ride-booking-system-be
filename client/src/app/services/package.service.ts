@@ -20,4 +20,14 @@ export class PackageService {
     return this.http.get<any[]>(`${this.apiUrl}?driverId=${driverId}`);
   }
 
+  deletePackage(packageId: string): Observable<any> {
+    console.log('Deleting package with ID:', packageId);
+    return this.http.delete<any>(`${this.apiUrl}/delete/${packageId}`);
+  }
+
+  disablePackage(packageId: string): Observable<any> {
+    console.log('Disabling package with ID:', packageId);
+    return this.http.patch<any>(`${this.apiUrl}/disable/${packageId}`, {});
+  }
+
 }
