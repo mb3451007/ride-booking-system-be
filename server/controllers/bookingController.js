@@ -45,3 +45,85 @@ exports.getBookings = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.confirmBookings = async (req, res) => {
+
+  const bookingId = req.params.id;
+  
+  if (!mongoose.Types.ObjectId.isValid(bookingId)) {
+    return res.status(400).json({ error: 'Invalid Booking ID' });
+  }
+
+  try {
+    console.log('Confirm Bookings')
+    // Find and update the booking's status
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status: "Confirmed" },
+      { new: true } // Returns the updated document
+    );
+
+    if (!updatedBooking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json({ message: "Booking confirmed successfully", booking: updatedBooking });
+  } catch (error) {
+    console.error("Error confirming booking:", error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+exports.cancelBooking = async (req, res) => {
+
+  const bookingId = req.params.id;
+  
+  if (!mongoose.Types.ObjectId.isValid(bookingId)) {
+    return res.status(400).json({ error: 'Invalid Booking ID' });
+  }
+
+  try {
+    console.log('Cancel Bookings')
+    // Find and update the booking's status
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status: "Cancelled" },
+      { new: true } // Returns the updated document
+    );
+
+    if (!updatedBooking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json({ message: "Booking cancelled successfully", booking: updatedBooking });
+  } catch (error) {
+    console.error("Error cancelling booking:", error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+exports.deleteBooking = async (req, res) => {
+
+  console.log("fel")
+  const bookingId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(bookingId)) {
+    return res.status(400).json({ error: 'Invalid Booking ID' });
+  }
+
+  try {
+    console.log('Deleting Booking');
+
+    // Find and delete the booking
+    const deletedBooking = await Booking.findByIdAndDelete(bookingId);
+
+    if (!deletedBooking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json({ message: "Booking deleted successfully", booking: deletedBooking });
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

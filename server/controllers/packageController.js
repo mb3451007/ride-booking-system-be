@@ -26,3 +26,19 @@ exports.viewPackage = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.disablePackage = async (req, res) => {
+    try {
+        const { driverId } = req.query;
+        console.log("Received driverId:", driverId);
+
+        if (!driverId) {
+            return res.status(400).json({ error: 'Driver ID is required' });
+        }
+
+        const package = await Package.find({driverId});
+        res.json(package);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
