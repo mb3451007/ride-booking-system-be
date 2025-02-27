@@ -6,6 +6,7 @@ const SurchargeSchema = new mongoose.Schema({
   endTime: { type: String, required: true },
   days: { type: [String], required: true },
   increaseMultiplier: { type: Number, required: true },
+  isActive: {type: Boolean, default: true},
   driverId: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver', required: true },
   vehicles: { type: String, required: true }
 }, { timestamps: true });

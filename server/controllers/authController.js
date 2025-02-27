@@ -20,6 +20,9 @@ exports.login = async (req, res) => {
     }
 
     const drivers_id = driver._id;
+    const drivers_name  = driver.firstName + ' ' + driver.lastName;
+    const drivers_phone = driver.phone;
+    const drivers_email = driver.email;
 
     // Set token expiration based on rememberMe
     const expiresIn = rememberMe ? "24h" : "1h";
@@ -28,7 +31,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ driverId: driver._id }, process.env.JWT_SECRET, { expiresIn });
 
     // Send success response
-    res.json({ success: true, token, drivers_id });
+    res.json({ success: true, token, drivers_id, drivers_name, drivers_phone, drivers_email });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ success: false, message: "Server error, please try again later." });

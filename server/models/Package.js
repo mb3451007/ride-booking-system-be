@@ -7,6 +7,7 @@ const PackageSchema = new mongoose.Schema(
     fixedPrice: { type: Number, required: true },
     priceWithSurcharged: { type: Number, required: true },
     way: { type: String, required: true },
+    isActive: {type: Boolean, default: true},
     driverId: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver', required: true },
     status: { type: String, enum: ['Active', 'Disabled'], default: 'Active' },
   },

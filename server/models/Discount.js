@@ -5,6 +5,7 @@ const discountSchema = new mongoose.Schema({
   type: { type: String, required: true, enum: ['percentage', 'fixed'] },
   value: { type: String, required: true },
   expiry: { type: Date, required: true },
+  isActive: {type: Boolean, default: true},
   driverId: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver', required: true },
   conditions: { type: String }
 }, { timestamps: true });
