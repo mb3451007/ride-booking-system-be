@@ -71,8 +71,8 @@
   left: 50%;
   transform: translateX(-50%);
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -80,5 +80,6 @@
 }
 
 .confirm-btn:hover {
-  background-color: #0056b3;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }

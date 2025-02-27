@@ -13,6 +13,7 @@ import { Point } from 'ol/geom';
 import { Style, Icon } from 'ol/style';
 import { CommonModule } from '@angular/common';
 import { BookingsService } from '../services/bookings.service';
+import { EmailService } from '../services/email.service';
 
 @Component({
   selector: 'app-booking-form',
@@ -36,7 +37,7 @@ export class BookingFormComponent implements AfterViewInit, OnInit {
   selectedCoordinates: { lat: number; lon: number } | null = null;
   selectedLocationName: string | null = null;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private bookingService: BookingsService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private bookingService: BookingsService, private emailService: EmailService) {
     this.newDiscountForm = this.fb.group({
       fullName: [''], // Add full name field
       startingAddress: [''],
@@ -184,13 +185,52 @@ ngAfterViewInit(): void {}
     submitBooking(): void {
       if (this.newDiscountForm.valid) {
         const formData = { ...this.newDiscountForm.value, driverId: this.driverId };
-  
+    
         this.bookingService.bookRide(formData).subscribe(
           (response) => {
             console.log('Booking successful:', response);
             this.bookingSuccess = true;
             this.bookingError = false;
             this.clearForm();
+    
+            // Assuming driver details are available in this.driverDetails
+            const driverName = localStorage.getItem('drivers_name');
+            const driverPhone = localStorage.getItem('drivers_phone');
+            const driverEmail = localStorage.getItem('drivers_email');
+    
+            // Construct email details with bold styling and separate driver details
+            const email = 'mohsinalijafery@gmail.com';
+            const subject = 'Booking Confirmation - Your Ride Details';
+            const message = `
+              <p>Dear <b>${formData.fullName}</b>,</p>
+              <p>Thank you for booking your ride with us! Here are your booking details:</p>
+              <ul>
+                <li><b>Starting Address:</b> ${formData.startingAddress}</li>
+                <li><b>Arrival Address:</b> ${formData.arrivalAddress}</li>
+                <li><b>Date:</b> ${formData.date}</li>
+                <li><b>Time:</b> ${formData.time}</li>
+                <li><b>Vehicle Type:</b> ${formData.vehicleType}</li>
+                <li><b>Trip Type:</b> ${formData.tripType}</li>
+              </ul>
+              <p><b>Driver Details:</b></p>
+              <ul>
+                <li><b>Name:</b> ${driverName}</li>
+                <li><b>Phone:</b> ${driverPhone}</li>
+                <li><b>Email:</b> ${driverEmail}</li>
+              </ul>
+              <p>Your ride has been successfully booked. If you have any questions or need further assistance, feel free to contact us.</p>
+              <p>Best regards,<br><b>Click Chauffeurs</b></p>
+            `;
+    
+            // Sending an email
+            this.emailService.sendEmail(email, subject, message).subscribe({
+              next: (res) => {
+                console.log('Email sent successfully:', res);
+              },
+              error: (err) => {
+                console.error('Failed to send email:', err);
+              },
+            });
           },
           (error) => {
             console.error('Booking failed:', error);
@@ -202,7 +242,7 @@ ngAfterViewInit(): void {}
         alert('Please fill all required fields.');
       }
     }
-  
+    
   // Method to clear the form and markers
   clearForm(): void {
     this.newDiscountForm.reset({

@@ -44,6 +44,10 @@ export class LoginComponent {
         if (response.success) {
           localStorage.setItem('authToken', response.token);
           localStorage.setItem('drivers_id', response.drivers_id);
+          localStorage.setItem('drivers_name', response.drivers_name);
+          localStorage.setItem('drivers_phone', response.drivers_phone);
+          console.log('phone' + response.drivers_phone);
+          localStorage.setItem('drivers_email', response.drivers_email);
           this.showMessage('Login successful! Redirecting...', false);
 
           // Trigger change detection manually

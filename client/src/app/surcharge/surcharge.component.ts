@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 export class SurchargeComponent implements OnInit {
   
   surchargeForm!: FormGroup;
-  showForm = false;
+  showSurchargeForm = false;
   surcharges: any[] = [];
   daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   drivers_id: string | null = null;
@@ -45,9 +45,9 @@ export class SurchargeComponent implements OnInit {
     
   }
 
-  toggleForm(): void {
-    this.showForm = !this.showForm;
-    if (!this.showForm) {
+  toggleSurchargeForm(): void {
+    this.showSurchargeForm = !this.showSurchargeForm;
+    if (!this.showSurchargeForm) {
       this.surchargeForm.reset();
       this.editingSurcharge = null;
     }
@@ -72,14 +72,14 @@ export class SurchargeComponent implements OnInit {
             this.surcharges[index] = response;
           }
           this.surchargeForm.reset();
-          this.showForm = false;
+          this.showSurchargeForm = false;
           this.editingSurcharge = null;
         });
       } else {
         this.surchargeService.addSurcharge(this.surchargeForm.value).subscribe(response => {
           this.surcharges.push(response);
           this.surchargeForm.reset();
-          this.showForm = false;
+          this.showSurchargeForm = false;
         });
       }
     }
@@ -94,7 +94,7 @@ export class SurchargeComponent implements OnInit {
   editSurcharge(surcharge: any): void {
     this.editingSurcharge = surcharge;
     this.surchargeForm.patchValue(surcharge);
-    this.showForm = true;
+    this.showSurchargeForm = true;
   }
 
   deleteSurcharge(id: string): void {

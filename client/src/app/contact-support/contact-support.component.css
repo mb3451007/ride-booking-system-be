@@ -15,8 +15,9 @@
 
 .custom-btn {
     background-color: var(--secondary-color);
-    color: var(--primary-color);
+    color: black;
     border: none;
+    cursor: pointer;
 }
 
  .card {

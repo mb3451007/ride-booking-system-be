@@ -2,14 +2,11 @@
     padding: 40px;
 }
 
-/* Enable horizontal scrolling */
 .table-responsive {
     overflow-x: auto;
     max-width: 100%;
-    border: 1px solid #ddd; /* Optional: border around the scrollable table */
 }
 
-/* Ensure columns take up space as per heading */
 table {
     font-size: 1rem;
     border-collapse: collapse;
@@ -44,6 +41,6 @@ table, th, td {
     border: 1px solid #ddd;
 }
 
-table td {
-    font-size: 0.9rem;
+table td, table th {
+    font-size: 0.8rem;
 }

@@ -65,7 +65,7 @@ export class PackagesComponent {
     });
   }
 
-    disablePackage(packageId: string) {
+  disablePackage(packageId: string) {
       this.openConfirmationDialog('Disable Package', 'Are you sure you want to disable this package?')
         .then((confirmed) => {
           if (confirmed) {
@@ -77,7 +77,7 @@ export class PackagesComponent {
         });
     }
 
-     editPackage(packageId: any) {
+    editPackage(packageId: any) {
         this.openConfirmationDialog('Edit package', 'Are you sure you want to edit this package?')
           .then((confirmed) => {
             if (confirmed) {
@@ -87,7 +87,7 @@ export class PackagesComponent {
           });
       }
     
-      deletePackage(packageId: string) {
+    deletePackage(packageId: string) {
         this.openConfirmationDialog('Delete package', 'Are you sure you want to delete this package?')
           .then((confirmed) => {
             if (confirmed) {

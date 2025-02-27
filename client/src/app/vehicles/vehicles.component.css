@@ -31,11 +31,13 @@
     font-weight: 600;
 }
 
-
-/* Table Customization */
 table {
     font-size: 1rem;
     border-collapse: collapse;
+}
+
+table th, .action {
+    white-space: nowrap;
 }
 
 table th, table td {
@@ -63,6 +65,6 @@ table, th, td {
     border: 1px solid #ddd;
 }
 
-table td {
-    font-size: 0.9rem;
+table td, table th {
+    font-size: 0.7rem;
 }

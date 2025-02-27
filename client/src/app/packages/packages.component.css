@@ -36,6 +36,10 @@ table {
     border-collapse: collapse;
 }
 
+table th, .action {
+    white-space: nowrap;
+}
+
 table th, table td {
     padding: 12px;
     text-align: left;
@@ -61,6 +65,6 @@ table, th, td {
     border: 1px solid #ddd;
 }
 
-table td {
-    font-size: 0.9rem;
+table td, table th {
+    font-size: 0.8rem;
 }

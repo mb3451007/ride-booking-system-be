@@ -1,76 +1,90 @@
-<div class="inner-dashboard-container mt-4">
-    <button (click)="toggleForm()" class="btn custom-btn mb-3">
-      {{ showForm ? 'View Surcharges' : 'Add Surcharge' }}
+<div class="inner-dashboard-container">
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    
+    <!-- Toggle Button -->
+    <button (click)="toggleSurchargeForm()" class="btn custom-btn w-40 mb-6 flex items-center justify-center gap-2">
+      <i class="fas" [ngClass]="showSurchargeForm ? 'fa-list' : 'fa-plus'"></i>
+      {{ showSurchargeForm ? 'View Surcharges' : 'Add Surcharge' }}
     </button>
-  
+    
     <!-- Surcharge Form -->
-    <div *ngIf="showForm" class="col-md-8">
-      <form [formGroup]="surchargeForm" (ngSubmit)="addSurcharge()">
-  
-        <!-- Surcharge Name -->
-        <div class="mb-3 header-title">
-          <label for="name" class="form-label">Surcharge Name</label>
-          <input formControlName="name" type="text" class="form-control" id="name" placeholder="Enter surcharge name">
-        </div>
-  
-        <!-- Start Time -->
-        <div class="mb-3 header-title">
-          <label for="startTime" class="form-label">Start Time</label>
-          <input formControlName="startTime" type="time" class="form-control" id="startTime">
-        </div>
-  
-        <!-- End Time -->
-        <div class="mb-3 header-title">
-          <label for="endTime" class="form-label">End Time</label>
-          <input formControlName="endTime" type="time" class="form-control" id="endTime">
-        </div>
-  
-        <!-- Days Selection -->
-        <div class="mb-3 header-title">
-          <label class="form-label">Applicable Days</label>
-          <div class="d-flex flex-wrap">
-            <div *ngFor="let day of daysOfWeek; let i = index" class="form-check me-3">
-              <input type="checkbox" [value]="day" (change)="toggleDaySelection(day, $event)" [checked]="surchargeForm.value.days.includes(day)" class="form-check-input" id="{{ day }}">
-              <label class="form-check-label" for="{{ day }}">{{ day }}</label>
+    <div *ngIf="showSurchargeForm" class="bg-gray-900 bg-opacity-50 p-6 rounded-lg shadow-md">
+      <div class="bg-white p-8 rounded-lg shadow-md relative">
+        
+        <h2 class="text-2xl font-semibold mb-4 text-center">Add a New Surcharge</h2>
+        <p class="text-gray-600 mb-6 text-center">Fill in the details below to add a new surcharge.</p>
+        
+        <form [formGroup]="surchargeForm" (ngSubmit)="addSurcharge()">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Surcharge Name -->
+            <div>
+              <label for="name" class="form-label">Surcharge Name</label>
+              <input formControlName="name" id="name" class="form-control" placeholder="Enter surcharge name" required>
+            </div>
+
+            <!-- Start Time -->
+            <div>
+              <label for="startTime" class="form-label">Start Time</label>
+              <input formControlName="startTime" id="startTime" type="time" class="form-control" required>
+            </div>
+
+            <!-- End Time -->
+            <div>
+              <label for="endTime" class="form-label">End Time</label>
+              <input formControlName="endTime" id="endTime" type="time" class="form-control" required>
+            </div>
+
+            <!-- Days Selection -->
+            <div>
+              <label class="form-label">Applicable Days</label>
+              <div class="d-flex flex-wrap">
+                <div *ngFor="let day of daysOfWeek" class="form-check me-3">
+                  <input type="checkbox" [value]="day" (change)="toggleDaySelection(day, $event)" [checked]="surchargeForm.value.days.includes(day)" class="form-check-input" id="{{ day }}">
+                  <label class="form-check-label" for="{{ day }}">{{ day }}</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Increase Multiplier -->
+            <div>
+              <label for="increaseMultiplier" class="form-label">Increase Multiplier</label>
+              <input formControlName="increaseMultiplier" id="increaseMultiplier" type="number" class="form-control" placeholder="Enter multiplier" required>
+            </div>
+
+            <!-- Vehicles -->
+            <div>
+              <label for="vehicles" class="form-label">Applicable Vehicles</label>
+              <input formControlName="vehicles" id="vehicles" class="form-control" placeholder="Enter vehicle types" required>
             </div>
           </div>
-        </div>
-  
-        <!-- Increase Multiplier -->
-        <div class="mb-3 header-title">
-          <label for="increaseMultiplier" class="form-label">Increase Multiplier</label>
-          <input formControlName="increaseMultiplier" type="number" class="form-control" id="increaseMultiplier" placeholder="Enter multiplier">
-        </div>
-  
-        <!-- Vehicles -->
-        <div class="mb-3 header-title">
-          <label for="vehicles" class="form-label">Applicable Vehicles</label>
-          <input formControlName="vehicles" type="text" class="form-control" id="vehicles" placeholder="Enter vehicle types">
-        </div>
-  
-        <!-- Submit Button -->
-        <button type="submit" class="btn custom-btn" [disabled]="surchargeForm.invalid">Add Surcharge</button>
-  
-      </form>
+          
+          <!-- Submit Button -->
+          <div class="text-center mt-6">
+            <button type="submit" class="btn custom-btn w-40" [disabled]="surchargeForm.invalid">Add Surcharge</button>
+          </div>
+        </form>
+      </div>
     </div>
-  
+    
     <!-- Surcharge Table -->
-    <div *ngIf="!showForm" class="table-responsive">
-      <table class="table table-bordered table-striped mt-3">
-        <thead class="table-dark">
+    <div *ngIf="!showSurchargeForm" class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="table-light">
           <tr>
-            <th>Index#</th>
+            <th>#</th>
             <th>Name</th>
             <th>Start Time</th>
             <th>End Time</th>
             <th>Days</th>
             <th>Multiplier</th>
             <th>Vehicles</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let surcharge of surcharges;let i = index">
+          <tr *ngFor="let surcharge of surcharges; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ surcharge.name }}</td>
             <td>{{ surcharge.startTime }}</td>
@@ -79,13 +93,22 @@
             <td>{{ surcharge.increaseMultiplier }}</td>
             <td>{{ surcharge.vehicles }}</td>
             <td>
-              <button class="btn btn-sm btn-info me-1" (click)="disableSurcharge(surcharge._id)"><i class="fa fa-ban"></i></button>
-              <button class="btn btn-sm btn-warning me-1" (click)="editSurcharge(surcharge._id)"><i class="fa fa-pencil-alt"></i></button>
-              <button class="btn btn-sm btn-danger" (click)="deleteSurcharge(surcharge._id)"><i class="fa fa-trash"></i></button>
+              <i class="fa" [ngClass]="surcharge.isActive ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-secondary" title="Disable" (click)="disableSurcharge(surcharge._id)">
+                <i class="fa fa-ban"></i>
+              </button>
+              <button class="btn btn-sm btn-warning" title="Edit" (click)="editSurcharge(surcharge._id)">
+                <i class="fa fa-pencil-alt"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" title="Delete" (click)="deleteSurcharge(surcharge._id)">
+                <i class="fa fa-trash"></i>
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  
+</div>

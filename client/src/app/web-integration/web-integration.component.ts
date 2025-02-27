@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, TemplateRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -11,23 +11,28 @@ import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import { Style, Icon } from 'ol/style';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-web-integration',
+  standalone: true,
   templateUrl: './web-integration.component.html',
   styleUrls: ['./web-integration.component.css'],
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
 })
 export class WebIntegrationComponent implements AfterViewInit, OnInit {
-
   driverId: string | null = null;
   iframeUrl: string = ''; 
+
+  currentDate = new Date();
+  currentDateString = this.currentDate.toISOString().split('T')[0];
+  currentTimeString = this.currentDate.toTimeString().split(' ')[0];
 
   @ViewChild('mapContainer') mapContainer!: ElementRef;
 
   newDiscountForm!: FormGroup;
   private map!: Map;
-  private vectorSource = new VectorSource(); // Ensure vector source is initialized
+  private vectorSource = new VectorSource();
   private vectorLayer!: VectorLayer;
   selectedLocations: { name: string; lat: number; lon: number }[] = [];
   currentField: 'startingAddress' | 'arrivalAddress' | null = null;
@@ -39,20 +44,18 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
     this.newDiscountForm = this.fb.group({
       startingAddress: [''],
       arrivalAddress: [''],
-      date: [''],
-      time: [''],
-      vehicleType: ['sedan'], // Default vehicle type
+      date: [this.currentDateString],  // ✅ Fix initialization
+      time: [this.currentTimeString],  // ✅ Fix initialization
+      vehicleType: ['sedan'], 
       tripType: ['one-way'],
     });
   }
 
   ngOnInit(): void {
-    
-    const currentDomain = window.location.origin; // Get the current domain
+    const currentDomain = window.location.origin;
     const driversId = localStorage.getItem('drivers_id');
 
     if (driversId) {
-      // Construct the iframe URL
       this.iframeUrl = `${currentDomain}/booking-form?id=${driversId}`;
     } else {
       console.error('drivers_id not found in localStorage');
@@ -70,7 +73,7 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
         this.initializeMap();
         this.mapInitialized = true;
       }
-    }, 100); // Ensures the map fully renders
+    }, 100);
   }
 
   closeMap(): void {
@@ -78,30 +81,31 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
   }
 
   private initializeMap(): void {
-    this.vectorLayer = new VectorLayer({ source: this.vectorSource });
+    if (!this.map) {
+      this.vectorLayer = new VectorLayer({ source: this.vectorSource });
 
-    this.map = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM(),
+      this.map = new Map({
+        target: 'map',
+        layers: [
+          new TileLayer({
+            source: new OSM(),
+          }),
+          this.vectorLayer,
+        ],
+        view: new View({
+          center: fromLonLat([2.3522, 48.8566]),
+          zoom: 6,
         }),
-        this.vectorLayer,
-      ],
-      view: new View({
-        center: fromLonLat([2.3522, 48.8566]), // Default center (Paris)
-        zoom: 6,
-      }),
-    });
+      });
 
-    // Add click event listener to the map
-    this.map.on('click', (event) => {
-      const coordinates = event.coordinate;
-      const [lon, lat] = toLonLat(coordinates); // Convert coordinates to longitude and latitude
-      console.log('Clicked Coordinates:', { lon, lat }); // Debugging
-      this.selectedCoordinates = { lat, lon };
-      this.addMarker(lon, lat);
-    });
+      this.map.on('click', (event) => {
+        const coordinates = event.coordinate;
+        const [lon, lat] = toLonLat(coordinates);
+        console.log('Clicked Coordinates:', { lon, lat });
+        this.selectedCoordinates = { lat, lon };
+        this.addMarker(lon, lat);
+      });
+    }
   }
 
   private addMarker(lon: number, lat: number): void {
@@ -132,7 +136,7 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
 
   confirmLocation(): void {
     if (this.selectedCoordinates && this.currentField) {
-      const { lat, lon } = this.selectedCoordinates; // Destructure safely
+      const { lat, lon } = this.selectedCoordinates;
 
       this.getLocationName(lat, lon).then((name) => {
         this.selectedLocationName = name;
@@ -167,8 +171,6 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
     console.log('Form Data:', this.newDiscountForm.value);
   }
 
-  // Method to copy iframe code to clipboard
-
   copyIframeCode(): void {
     const iframeCode = document.getElementById('iframeCode')!.innerText;
     navigator.clipboard.writeText(iframeCode)
@@ -180,5 +182,4 @@ export class WebIntegrationComponent implements AfterViewInit, OnInit {
         alert('Failed to copy iframe code. Please try again.');
       });
   }
-
 }
