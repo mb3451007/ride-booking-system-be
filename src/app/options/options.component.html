@@ -1,0 +1,40 @@
+<div class="toolbox">
+    <button (click)="addElement('text')">Text Field</button>
+    <button (click)="addElement('email')">Email Field</button>
+    <button (click)="addElement('number')">Number Field</button>
+    <button (click)="addElement('textarea')">Text Area</button>
+    <button (click)="addElement('select')">Select Dropdown</button>
+    <button (click)="addElement('checkbox')">Checkbox</button>
+    <button (click)="addElement('custom', '<input type=\'color\' name=\'customColor\' formControlName=\'customColor\'>')">Custom Color</button>
+  </div>
+  
+  <div class="form-container" #formContainer (click)="selectElement($event)">
+    <div *ngFor="let element of formElements; let i = index" 
+         [attr.data-index]="i"
+         [style.cursor]="'pointer'"
+         [class.selected]="selectedElementIndex === i">
+      <ng-container *ngIf="!element.customHtml" [ngSwitch]="element.type">
+        <input *ngSwitchCase="'text'" type="text" [formControlName]="element.controlName" [placeholder]="'Text Field'">
+        <input *ngSwitchCase="'email'" type="email" [formControlName]="element.controlName" [placeholder]="'Email Field'">
+        <input *ngSwitchCase="'number'" type="number" [formControlName]="element.controlName" [placeholder]="'Number Field'">
+        <textarea *ngSwitchCase="'textarea'" [formControlName]="element.controlName" [placeholder]="'Text Area'"></textarea>
+        <select *ngSwitchCase="'select'" [formControlName]="element.controlName">
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+        </select>
+        <input *ngSwitchCase="'checkbox'" type="checkbox" [formControlName]="element.controlName">
+      </ng-container>
+      <ng-container *ngIf="element.customHtml">
+        <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(element.customHtml)"></div>
+      </ng-container>
+      <button class="remove-element" (click)="removeElement(i)">Remove</button>
+    </div>
+  </div>
+  
+  <button (click)="getFormHTML()">Get Form HTML</button>
+  
+  <textarea #htmlOutput>{{ formHTML }}</textarea>
+  
+  <div *ngIf="form.valid">Form is valid!</div>
+  <div *ngIf="form.invalid">Form is invalid!</div>
+  <pre>{{ form.value | json }}</pre>

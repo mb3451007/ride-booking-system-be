@@ -1,0 +1,54 @@
+<div class="inner-dashboard-container">
+    <div class="table-responsive">
+        <table class="booking-table table table-striped">
+            <thead>
+                <tr>
+                    <th>Index#</th>
+                    <th>Customer</th>
+                    <th>Pickup Location</th>
+                    <th>Dropoff Location</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Vehicle Type</th>
+                    <th>Status</th>
+                    <th class="action">Actions</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings; let i = index">
+                    <td>{{ i + 1 }}</td> <!-- Corrected from booking.id to booking._id -->
+                    <td>{{ booking.fullName }}</td> <!-- Corrected from booking.customer -->
+                    <td>{{ booking.startingAddress }}</td> <!-- Corrected from booking.pickupLocation -->
+                    <td>{{ booking.arrivalAddress }}</td> <!-- Corrected from booking.dropoffLocation -->
+                    <td>{{ booking.date }}</td>
+                    <td>{{ booking.time }}</td>
+                    <td>{{ booking.vehicleType }}</td>
+                    <td>{{ booking.status}}</td> <!-- Your schema does not have a 'status' field -->
+                    <td class="action">
+                        <!-- Confirm Button -->
+                        <button class="btn btn-sm btn-success me-1" (click)="confirmBooking(booking._id)" title="Confirm">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        
+                        <!-- Cancel Button -->
+                        <button class="btn btn-sm btn-secondary me-1" (click)="cancelBooking(booking._id)" title="Cancel">
+                            <i class="fa fa-ban"></i>
+                        </button>
+                        
+                        <!-- Share Button -->
+                        <button class="btn btn-sm btn-primary me-1" (click)="shareBooking(booking)" title="Share">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                        
+                        <!-- Delete Button -->
+                        <button class="btn btn-sm btn-danger" (click)="deleteBooking(booking._id)" title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                                        
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

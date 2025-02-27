@@ -1,0 +1,88 @@
+<div class="inner-dashboard-container">
+  <div class="mx-auto bg-white rounded-lg">
+    <div class="row">
+      <!-- Ride Booking Form (Left - col-md-8) -->
+      <div class="col-md-7 bg-white p-5 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4 text-center">🚖 Ride Booking Made Easy</h2>
+        <p class="text-center text-gray-600 mb-6">
+          Experience seamless and hassle-free travel with our ride booking service. Choose your destination, 
+          select your ride, and enjoy the convenience of safe and reliable transportation at your fingertips.
+        </p>
+        <form [formGroup]="newDiscountForm">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Starting Address</label>
+            <input
+              formControlName="startingAddress"
+              type="text"
+              class="form-control"
+              placeholder="Click to select location"
+              readonly
+              (click)="openMap('startingAddress')"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Arrival Address</label>
+            <input
+              formControlName="arrivalAddress"
+              type="text"
+              class="form-control"
+              placeholder="Click to select location"
+              readonly
+              (click)="openMap('arrivalAddress')"
+            />
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Date</label>
+              <input formControlName="date" type="date" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Time</label>
+              <input formControlName="time" type="time" class="form-control" required />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Vehicle Type</label>
+            <select formControlName="vehicleType" class="form-select" required>
+              <option value="sedan">Sedan</option>
+              <option value="suv">SUV</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="luxury">Luxury</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Trip Type</label>
+            <select formControlName="tripType" class="form-select" required>
+              <option value="one-way">One Way</option>
+              <option value="return">Return Trip</option>
+            </select>
+          </div>
+          <div class="d-flex justify-content-center p-4">
+            <button type="button" class="btn btn-lg custom-btn" (click)="clearMarkers()">Confirm Booking</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Embedded Form (Right - col-md-4) -->
+      <div class="col-md-5 p-5 bg-white rounded-lg shadow-md text-center">
+        <h3 class="text-xl font-semibold mb-4">Embed This Form</h3>
+        <p class="text-gray-600 mb-4">Copy and paste the following iframe code to embed this form on another website:</p>
+        <div class="bg-gray-100 p-3 rounded">
+          <code id="iframeCode">
+            &lt;iframe src="{{ iframeUrl }}" width="100%" height="600" style="border: none;"&gt;&lt;/iframe&gt;
+          </code>
+        </div>
+        <button class="btn custom-btn mt-3" (click)="copyIframeCode()">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Map Modal -->
+<div id="mapModal" class="map-modal">
+  <div class="map-container">
+    <button class="close-btn" (click)="closeMap()">✖</button>
+    <div id="map" class="map-style"></div>
+    <button class="confirm-btn" (click)="confirmLocation()">OK</button>
+  </div>
+</div>
