@@ -1,0 +1,171 @@
+<div class="text-center h-5">
+  <img src="assets/images/logo.webp" class="img-fluid mx-auto">
+</div>
+<div class="container d-flex justify-content-center align-items-center m-5">
+  <div class="card p-4 w-100" style="max-width: 600px;">
+
+    <!-- Step 1: User Registration -->
+    <form *ngIf="step === 1" [formGroup]="step1Form">
+      <h3 class="text-center mb-4">Create Your Account: Step 1 of 2</h3>
+      <p class="text-center text-success">✅ 14 days Money back guarantee</p>
+
+      <!-- Email -->
+      <div class="mb-3" [ngClass]="{'is-invalid': step1Form.get('email')?.invalid && step1Form.get('email')?.touched}">
+        <label class="form-label">Email address <span class="text-danger">*</span></label>
+        <input type="email" class="form-control" formControlName="email" placeholder="Enter your email address">
+        <div *ngIf="step1Form.get('email')?.touched && step1Form.get('email')?.invalid" class="invalid-feedback balloon">
+          <small *ngIf="step1Form.get('email')?.hasError('required')">Email address is required.</small>
+          <small *ngIf="step1Form.get('email')?.hasError('email')">Enter a valid email address.</small>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3" [ngClass]="{'is-invalid': step1Form.get('password')?.invalid && step1Form.get('password')?.touched}">
+        <label class="form-label">Password <span class="text-danger">*</span></label>
+        <input type="password" class="form-control" formControlName="password" placeholder="Enter a strong password">
+        <div *ngIf="step1Form.get('password')?.touched && step1Form.get('password')?.invalid" class="invalid-feedback balloon">
+          <small *ngIf="step1Form.get('password')?.hasError('required')">Password is required.</small>
+          <small *ngIf="step1Form.get('password')?.hasError('minlength')">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+
+      <!-- Consent Checkbox -->
+      <div class="mb-3 form-check" [ngClass]="{'is-invalid': step1Form.get('consent')?.invalid && step1Form.get('consent')?.touched}">
+        <input type="checkbox" class="form-check-input" formControlName="consent">
+        <label class="form-check-label">
+          🔒 I authorize the transmission of my data and agree to receive promotional information.
+        </label>
+        <div *ngIf="step1Form.get('consent')?.touched && step1Form.get('consent')?.invalid" class="invalid-feedback balloon">
+          <small>You must agree to the data consent.</small>
+        </div>
+      </div>
+
+      <!-- Continue Button -->
+      <button type="button" class="btn btn-primary w-100" (click)="nextStep()" [disabled]="step1Form.invalid">Continue</button>
+    </form>
+
+    <!-- Step 2: Additional Details -->
+    <form *ngIf="step === 2" [formGroup]="step2Form" (ngSubmit)="submitForm()">
+      <h3 class="text-center mb-4">Create Your Account and Start Configuring</h3>
+
+      <h5>Contact Information</h5>
+      <div class="row">
+        <div class="col-6 mb-3" [ngClass]="{'is-invalid': step2Form.get('firstName')?.invalid && step2Form.get('firstName')?.touched}">
+          <label class="form-label">First name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="firstName" placeholder="Enter your first name">
+          <div *ngIf="step2Form.get('firstName')?.touched && step2Form.get('firstName')?.invalid" class="invalid-feedback balloon">
+            <small *ngIf="step2Form.get('firstName')?.hasError('required')">First name is required.</small>
+          </div>
+        </div>
+        <div class="col-6 mb-3" [ngClass]="{'is-invalid': step2Form.get('lastName')?.invalid && step2Form.get('lastName')?.touched}">
+          <label class="form-label">Last name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="lastName" placeholder="Enter your last name">
+          <div *ngIf="step2Form.get('lastName')?.touched && step2Form.get('lastName')?.invalid" class="invalid-feedback balloon">
+            <small *ngIf="step2Form.get('lastName')?.hasError('required')">Last name is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3" [ngClass]="{'is-invalid': step2Form.get('phone')?.invalid && step2Form.get('phone')?.touched}">
+        <label class="form-label">Phone <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="phone" placeholder="Enter your phone number (e.g., 123-456-7890)">
+        <div *ngIf="step2Form.get('phone')?.touched && step2Form.get('phone')?.invalid" class="invalid-feedback balloon">
+          <small *ngIf="step2Form.get('phone')?.hasError('required')">Phone number is required.</small>
+          <small *ngIf="step2Form.get('phone')?.hasError('pattern')">Enter a valid phone number.</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Company</label>
+        <input type="text" class="form-control" formControlName="company" placeholder="Enter your company name (optional)">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input type="text" class="form-control" formControlName="address" placeholder="Enter your full address (optional)">
+      </div>
+
+      <h5 class="mt-4">Offer</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="subscription" value="monthly" checked>
+        <label class="form-check-label">
+          ClickChauffeur Monthly Subscription - $39.00 every month
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" formControlName="subscription" value="annual">
+        <label class="form-check-label">
+          Annual subscription - $327.00 every year
+        </label>
+      </div>
+
+      <h5 class="mt-4">Payment Information</h5>
+      <div class="mb-3" [ngClass]="{'is-invalid': step2Form.get('cardNumber')?.invalid && step2Form.get('cardNumber')?.touched}">
+        <label class="form-label">Card number <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="cardNumber" placeholder="Enter your card number (16 digits)">
+        <div *ngIf="step2Form.get('cardNumber')?.touched && step2Form.get('cardNumber')?.invalid" class="invalid-feedback balloon">
+          <small *ngIf="step2Form.get('cardNumber')?.hasError('required')">Card number is required.</small>
+          <small *ngIf="step2Form.get('cardNumber')?.hasError('pattern')">Invalid card number.</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6 mb-3" [ngClass]="{'is-invalid': step2Form.get('expirationDate')?.invalid && step2Form.get('expirationDate')?.touched}">
+          <label class="form-label">Expiration date <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="expirationDate" placeholder="Enter card expiration date (MM/YY)">
+          <div *ngIf="step2Form.get('expirationDate')?.touched && step2Form.get('expirationDate')?.invalid" class="invalid-feedback balloon">
+            <small *ngIf="step2Form.get('expirationDate')?.hasError('required')">Expiration date is required.</small>
+            <small *ngIf="step2Form.get('expirationDate')?.hasError('pattern')">Invalid expiration date. Format: MM/YY.</small>
+          </div>
+        </div>
+
+        <div class="col-6 mb-3" [ngClass]="{'is-invalid': step2Form.get('cvc')?.invalid && step2Form.get('cvc')?.touched}">
+          <label class="form-label">CVC <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="cvc" placeholder="Enter CVC (3 digits)" maxlength="4" (keypress)="validateNumberInput($event)">
+          <div *ngIf="step2Form.get('cvc')?.touched && step2Form.get('cvc')?.invalid" class="invalid-feedback balloon">
+            <small *ngIf="step2Form.get('cvc')?.hasError('required')">CVC is required.</small>
+            <small *ngIf="step2Form.get('cvc')?.hasError('pattern')">Invalid CVC. It should be 3 digits.</small>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-muted">🔐 Payment 100% secure, 256-bit encryption</p>
+
+      <div class="mb-3 form-check" [ngClass]="{'is-invalid': step2Form.get('dataConsent')?.invalid && step2Form.get('dataConsent')?.touched}">
+        <input type="checkbox" class="form-check-input" formControlName="dataConsent">
+        <label class="form-check-label">I agree to data processing.</label>
+        <div *ngIf="step2Form.get('dataConsent')?.touched && step2Form.get('dataConsent')?.invalid" class="invalid-feedback balloon">
+          <small>You must agree to data processing.</small>
+        </div>
+      </div>
+
+      <div class="mb-3 form-check" [ngClass]="{'is-invalid': step2Form.get('terms')?.invalid && step2Form.get('terms')?.touched}">
+        <input type="checkbox" class="form-check-input" formControlName="terms">
+        <label class="form-check-label">I accept the Terms and Conditions.</label>
+        <div *ngIf="step2Form.get('terms')?.touched && step2Form.get('terms')?.invalid" class="invalid-feedback balloon">
+          <small>You must accept the terms and conditions.</small>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="prevStep()">Back</button>
+        <button type="submit" class="btn btn-primary" [disabled]="step2Form.invalid">Submit</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<!-- Bootstrap Modal for Messages -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" [ngClass]="{ 'bg-danger': isError, 'bg-success': !isError }">
+        <h5 class="modal-title">{{ isError ? 'Error' : 'Success' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+</div>

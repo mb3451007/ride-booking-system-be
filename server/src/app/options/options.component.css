@@ -1,0 +1,7 @@
+/* Styles for the form builder */
+.toolbox {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  /* ... other styles ... */

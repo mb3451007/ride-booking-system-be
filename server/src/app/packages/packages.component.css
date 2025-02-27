@@ -1,0 +1,70 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #000957;
+    --secondary-color: #FFEB00;
+    --accent-color: #577BC1;
+    --background-color: #F5F7FA;
+    --text-color: #333;
+    --hover-color: #0056b3;
+    --white: #FFFFFF;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+}
+
+.inner-dashboard-container {
+    padding: 40px;
+}
+
+.header-title {
+    background-color: var(--secondary-color);
+    box-shadow: var(--shadow); /* Add shadow to top nav */
+    padding: 20px 10px;
+}
+
+.header-title label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+table {
+    font-size: 1rem;
+    border-collapse: collapse;
+}
+
+table th, .action {
+    white-space: nowrap;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--secondary-color); /* Light background for headers */
+    font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternating row colors */
+}
+
+/* Row Hover Effect */
+table tbody tr:hover {
+    background-color: #e9ecef; /* Subtle hover effect */
+    cursor: pointer;
+}
+
+/* Styling for table borders */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+table td, table th {
+    font-size: 0.8rem;
+}
