@@ -1,14 +1,14 @@
 <div class="inner-dashboard-container">
-  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg">
     
-    <!-- Toggle Button -->
     <button (click)="toggleDiscountForm()" class="btn custom-btn w-40 mb-6 flex items-center justify-center gap-2">
       <i class="fas" [ngClass]="showDiscountForm ? 'fa-list' : 'fa-plus'"></i>
       {{ showDiscountForm ? 'View Discounts' : 'Add Discount Code' }}
     </button>
+
+    <br><br>
     
-    <!-- Discount Form -->
-    <div *ngIf="showDiscountForm" class="bg-gray-900 bg-opacity-50 p-6 rounded-lg shadow-md">
+    <div *ngIf="showDiscountForm" class="bg-gray-900 bg-opacity-50 p-5 rounded-lg shadow-md col-md-9 card d-flex mx-auto">
       <div class="bg-white p-8 rounded-lg shadow-md relative">
         
         <h2 class="text-2xl font-semibold mb-4 text-center">Add Discount Code</h2>
@@ -17,41 +17,40 @@
         <form [formGroup]="newDiscountForm" (ngSubmit)="addDiscount()">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- Discount Code -->
-            <div>
+            <div class="mb-4">
               <label for="code" class="form-label">Discount Code</label>
               <input formControlName="code" id="code" class="form-control" placeholder="Enter discount code" required>
+              <small class="text-gray-500">The unique code that customers will use to apply the discount.</small>
             </div>
 
-            <!-- Discount Type -->
-            <div>
+            <div class="mb-4">
               <label for="type" class="form-label">Discount Type</label>
               <select formControlName="type" id="type" class="form-select" required>
                 <option value="percentage">Percentage</option>
                 <option value="fixed">Fixed Amount</option>
               </select>
+              <small class="text-gray-500">Choose whether the discount is a percentage or a fixed amount.</small>
             </div>
 
-            <!-- Discount Value -->
-            <div>
+            <div class="mb-4">
               <label for="value" class="form-label">Discount Value</label>
               <input formControlName="value" id="value" type="number" class="form-control" placeholder="Enter discount value" required>
+              <small class="text-gray-500">The amount or percentage of the discount.</small>
             </div>
 
-            <!-- Expiry Date -->
-            <div>
+            <div class="mb-4">
               <label for="expiry" class="form-label">Expiry Date</label>
               <input formControlName="expiry" id="expiry" type="date" class="form-control" required>
+              <small class="text-gray-500">The date when the discount code will expire.</small>
             </div>
 
-            <!-- Conditions -->
-            <div class="col-span-2">
+            <div class="col-span-2 mb-4">
               <label for="conditions" class="form-label">Conditions</label>
               <textarea formControlName="conditions" id="conditions" class="form-control" placeholder="Enter discount conditions" rows="3"></textarea>
+              <small class="text-gray-500">Any specific conditions or limitations for using the discount code.</small>
             </div>
           </div>
           
-          <!-- Submit Button -->
           <div class="text-center mt-6">
             <button type="submit" class="btn custom-btn w-40" [disabled]="newDiscountForm.invalid">Add Discount</button>
           </div>
@@ -59,7 +58,6 @@
       </div>
     </div>
     
-    <!-- Discount Table -->
     <div *ngIf="!showDiscountForm" class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead class="table-light">

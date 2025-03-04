@@ -1,65 +1,69 @@
 <div class="inner-dashboard-container">
-  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg">
     
-    <!-- Toggle Button -->
     <button (click)="togglePackageForm()" class="btn custom-btn w-40 mb-6 flex items-center justify-center gap-2">
       <i class="fas" [ngClass]="showPackageForm ? 'fa-list' : 'fa-plus'"></i>
       {{ showPackageForm ? 'View Packages' : 'Add Package' }}
     </button>
     
-    <!-- Package Form -->
-    <div *ngIf="showPackageForm" class="bg-gray-900 bg-opacity-50 p-6 rounded-lg shadow-md">
+    <br><br>
+    <div *ngIf="showPackageForm" class="bg-gray-900 bg-opacity-50 p-5 rounded-lg shadow-md col-md-9 card d-flex mx-auto">
       <div class="bg-white p-8 rounded-lg shadow-md relative">
         
         <h2 class="text-2xl font-semibold mb-4 text-center">Add a New Package</h2>
         <p class="text-gray-600 mb-6 text-center">Fill in the details below to add a new package.</p>
         
         <form [formGroup]="newPackageForm" (ngSubmit)="addPackage()">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="">
             
-            <!-- Package Name -->
-            <div>
+            <div class="mb-4">
               <label for="name" class="form-label">Package Name</label>
               <input formControlName="name" id="name" class="form-control" placeholder="Enter package name" required>
+              <small class="text-gray-500">Name of the package or service.</small>
             </div>
 
-            <!-- Vehicle -->
-            <div>
+            <div class="mb-4">
               <label for="vehicle" class="form-label">Vehicle</label>
               <input formControlName="vehicle" id="vehicle" class="form-control" placeholder="Enter vehicle type" required>
+              <small class="text-gray-500">Type of vehicle used for this package (e.g., Sedan, SUV).</small>
             </div>
 
-            <!-- Fixed Price -->
-            <div>
+            <div class="mb-4">
               <label for="fixedPrice" class="form-label">Fixed Price</label>
               <input formControlName="fixedPrice" id="fixedPrice" class="form-control" placeholder="Enter fixed price" required>
+              <small class="text-gray-500">The base price of the package.</small>
             </div>
 
-            <!-- Price with Surcharged -->
-            <div>
+            <div class="mb-4">
               <label for="priceWithSurcharged" class="form-label">Price with Surcharged</label>
               <input formControlName="priceWithSurcharged" id="priceWithSurcharged" class="form-control" placeholder="Enter price with surcharged" required>
+              <small class="text-gray-500">Total price including any additional surcharges.</small>
             </div>
 
-            <!-- Way -->
-            <div>
+            <div class="mb-4">
               <label for="way" class="form-label">Way</label>
               <input formControlName="way" id="way" class="form-control" placeholder="Enter way details" required>
+              <small class="text-gray-500">Details about the route or direction of the package.</small>
             </div>
             
-            <!-- Status -->
-            <div>
+            <div class="mb-4">
               <label for="status" class="form-label">Status</label>
               <select formControlName="status" id="status" class="form-select" required>
                 <option value="Active">Active</option>
                 <option value="Disabled">Disabled</option>
               </select>
+              <small class="text-gray-500">Availability status of the package.</small>
+            </div>
+
+            <div class="mb-4">
+              <label for="baggageSpace" class="form-label">Baggage Capacity</label>
+              <input formControlName="baggageSpace" id="baggageSpace" class="form-control" placeholder="E.g., 3 suitcases" required>
+              <small class="text-gray-500">Total luggage space available in the vehicle.</small>
             </div>
           </div>
           
-          <!-- Submit Button -->
           <div class="text-center mt-6">
-            <button type="submit" class="btn custom-btn w-40" [disabled]="newPackageForm.invalid">
+            <button type="submit" class="btn custom-btn btn-lg" [disabled]="newPackageForm.invalid">
               {{ isEditing ? 'Update Package' : 'Add Package' }}
             </button>
           </div>
@@ -67,7 +71,6 @@
       </div>
     </div>
     
-    <!-- Package Table -->
     <div *ngIf="!showPackageForm" class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead class="table-light">

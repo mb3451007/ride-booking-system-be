@@ -1,14 +1,14 @@
 <div class="inner-dashboard-container">
-  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+  <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg">
     
-    <!-- Toggle Button -->
     <button (click)="toggleSurchargeForm()" class="btn custom-btn w-40 mb-6 flex items-center justify-center gap-2">
       <i class="fas" [ngClass]="showSurchargeForm ? 'fa-list' : 'fa-plus'"></i>
       {{ showSurchargeForm ? 'View Surcharges' : 'Add Surcharge' }}
     </button>
+
+    <br><br>
     
-    <!-- Surcharge Form -->
-    <div *ngIf="showSurchargeForm" class="bg-gray-900 bg-opacity-50 p-6 rounded-lg shadow-md">
+    <div *ngIf="showSurchargeForm" class="bg-gray-900 bg-opacity-50 p-5 rounded-lg shadow-md col-md-9 card d-flex mx-auto">
       <div class="bg-white p-8 rounded-lg shadow-md relative">
         
         <h2 class="text-2xl font-semibold mb-4 text-center">Add a New Surcharge</h2>
@@ -17,26 +17,25 @@
         <form [formGroup]="surchargeForm" (ngSubmit)="addSurcharge()">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- Surcharge Name -->
-            <div>
+            <div class="mb-4">
               <label for="name" class="form-label">Surcharge Name</label>
               <input formControlName="name" id="name" class="form-control" placeholder="Enter surcharge name" required>
+              <small class="text-gray-500">Descriptive name for the surcharge (e.g., Night Surcharge, Weekend Surcharge).</small>
             </div>
 
-            <!-- Start Time -->
-            <div>
+            <div class="mb-4">
               <label for="startTime" class="form-label">Start Time</label>
               <input formControlName="startTime" id="startTime" type="time" class="form-control" required>
+              <small class="text-gray-500">Time when the surcharge becomes active.</small>
             </div>
 
-            <!-- End Time -->
-            <div>
+            <div class="mb-4">
               <label for="endTime" class="form-label">End Time</label>
               <input formControlName="endTime" id="endTime" type="time" class="form-control" required>
+              <small class="text-gray-500">Time when the surcharge becomes inactive.</small>
             </div>
 
-            <!-- Days Selection -->
-            <div>
+            <div class="mb-4">
               <label class="form-label">Applicable Days</label>
               <div class="d-flex flex-wrap">
                 <div *ngFor="let day of daysOfWeek" class="form-check me-3">
@@ -44,22 +43,22 @@
                   <label class="form-check-label" for="{{ day }}">{{ day }}</label>
                 </div>
               </div>
+              <small class="text-gray-500">Select the days of the week when this surcharge applies.</small>
             </div>
 
-            <!-- Increase Multiplier -->
-            <div>
+            <div class="mb-4">
               <label for="increaseMultiplier" class="form-label">Increase Multiplier</label>
               <input formControlName="increaseMultiplier" id="increaseMultiplier" type="number" class="form-control" placeholder="Enter multiplier" required>
+              <small class="text-gray-500">Factor by which the base price is increased (e.g., 1.2 for a 20% increase).</small>
             </div>
 
-            <!-- Vehicles -->
-            <div>
+            <div class="mb-4">
               <label for="vehicles" class="form-label">Applicable Vehicles</label>
               <input formControlName="vehicles" id="vehicles" class="form-control" placeholder="Enter vehicle types" required>
+              <small class="text-gray-500">List of vehicle types to which this surcharge applies (e.g., Sedan, SUV).</small>
             </div>
           </div>
           
-          <!-- Submit Button -->
           <div class="text-center mt-6">
             <button type="submit" class="btn custom-btn w-40" [disabled]="surchargeForm.invalid">Add Surcharge</button>
           </div>
@@ -67,7 +66,6 @@
       </div>
     </div>
     
-    <!-- Surcharge Table -->
     <div *ngIf="!showSurchargeForm" class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead class="table-light">

@@ -6,75 +6,77 @@
       <i class="fas" [ngClass]="showForm ? 'fa-list' : 'fa-plus'"></i>
       {{ showForm ? 'View Vehicles' : 'Add New Vehicle' }}
     </button>
+
+    <br><br>
     
     <!-- Vehicle Form -->
-    <div *ngIf="showForm" class="bg-gray-900 bg-opacity-50 p-6 rounded-lg shadow-md">
+    <div *ngIf="showForm" class="bg-gray-900 bg-opacity-50 p-5 rounded-lg shadow-md col-md-9 card d-flex mx-auto">
       <div class="bg-white p-8 rounded-lg shadow-md relative">
         
         <h2 class="text-2xl font-semibold mb-4 text-center">Add a New Vehicle</h2>
         <p class="text-gray-600 mb-6 text-center">Fill in the details below to add a new vehicle to your fleet.</p>
         
         <form [formGroup]="newVehicleForm" (ngSubmit)="addVehicle()">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="">
             
             <!-- Passenger Space -->
-            <div>
+            <div class="mb-4">
               <label for="passengerSpace" class="form-label">Passenger Capacity</label>
               <input formControlName="passengerSpace" id="passengerSpace" class="form-control" placeholder="E.g., 4 passengers" required>
               <small class="text-gray-500">Number of passengers the vehicle can accommodate.</small>
             </div>
 
             <!-- Baggage Space -->
-            <div>
+            <div class="mb-4">
               <label for="baggageSpace" class="form-label">Baggage Capacity</label>
               <input formControlName="baggageSpace" id="baggageSpace" class="form-control" placeholder="E.g., 3 suitcases" required>
               <small class="text-gray-500">Total luggage space available in the vehicle.</small>
             </div>
 
             <!-- Number Owned -->
-            <div>
+            <div class="mb-4">
               <label for="numberOwned" class="form-label">Number Owned</label>
               <input formControlName="numberOwned" id="numberOwned" class="form-control" placeholder="E.g., 5" required>
               <small class="text-gray-500">How many of this vehicle type are available?</small>
             </div>
 
             <!-- Price From -->
-            <div>
+            <div class="mb-4">
               <label for="priceFrom" class="form-label">Starting Price</label>
               <input formControlName="priceFrom" id="priceFrom" class="form-control" placeholder="$50" required>
               <small class="text-gray-500">The minimum fare for booking this vehicle.</small>
             </div>
 
             <!-- Price Per KM -->
-            <div>
+            <div class="mb-4">
               <label for="pricePerKm" class="form-label">Rate per KM</label>
               <input formControlName="pricePerKm" id="pricePerKm" class="form-control" placeholder="$2 per km" required>
               <small class="text-gray-500">Cost per kilometer traveled.</small>
             </div>
 
             <!-- Price Per Min -->
-            <div>
+            <div class="mb-4">
               <label for="pricePerMin" class="form-label">Rate per Minute</label>
               <input formControlName="pricePerMin" id="pricePerMin" class="form-control" placeholder="$1 per min" required>
               <small class="text-gray-500">Cost per minute of ride time.</small>
             </div>
 
             <!-- Price Per Passenger -->
-            <div>
+            <div class="mb-4">
               <label for="pricePerPassenger" class="form-label">Rate per Passenger</label>
               <input formControlName="pricePerPassenger" id="pricePerPassenger" class="form-control" placeholder="$5 per person" required>
               <small class="text-gray-500">Charge per additional passenger.</small>
             </div>
 
             <!-- Minimum Fare -->
-            <div>
+            <div class="mb-4">
               <label for="minimumFare" class="form-label">Minimum Fare</label>
               <input formControlName="minimumFare" id="minimumFare" class="form-control" placeholder="$20" required>
               <small class="text-gray-500">The base fare for any ride.</small>
             </div>
             
             <!-- Active Status -->
-            <div>
+            <div class="mb-4">
               <label for="isActive" class="form-label">Active?</label>
               <select formControlName="isActive" id="isActive" class="form-select" required>
                 <option value="true">Yes</option>
@@ -86,7 +88,7 @@
           
           <!-- Submit Button -->
           <div class="text-center mt-6">
-            <button type="submit" class="btn custom-btn w-40" [disabled]="newVehicleForm.invalid">
+            <button type="submit" class="btn custom-btn btn-lg" [disabled]="newVehicleForm.invalid">
               Add Vehicle
             </button>
           </div>
