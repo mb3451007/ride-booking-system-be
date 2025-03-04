@@ -28,6 +28,7 @@ app.use("/api", require("./routes/surchargeRoutes"));
 app.use("/api", require("./routes/discountRoutes"));
 app.use("/api", require("./routes/bookingRoutes"));
 app.use("/api", require("./routes/emailRoutes"));
+app.use("/api", require("./routes/paymentRoutes"));
 
 // Start Server
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));

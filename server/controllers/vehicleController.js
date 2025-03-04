@@ -73,4 +73,16 @@ exports.deleteVehicle = async (req, res) => {
       res.status(500).json({ error: 'Server error' });
     }
   };
+
+  exports.getVehicles = async (req, res) => {
+    try {
+      const vehicles = await Vehicle.find({ driverId: req.params.driverId, isActive: true });
+      res.json(vehicles);
+    } catch (error) {
+      res.status(500).json({ error: "Server error" });
+    }
+
+  };
+
+
   

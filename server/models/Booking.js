@@ -8,6 +8,7 @@ const BookingSchema = new mongoose.Schema({
     time: { type: String, required: true },
     vehicleType: { type: String, required: true },
     tripType: { type: String, required: true },
+    discountCode: {type: String, default: ''},
     status: {type: String, default: 'Not Confirmed'},
     driverId: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver', required: true },
   }, { timestamps: true });
